@@ -10,7 +10,8 @@ import "./assets/scss/customizer.scss";
 
 // Redux Selector / Action
 // Start collaboration with my Awsome Broda
-// Ending collaboration with my brotha.  
+// Ending collaboration with my brotha.
+// The ending of the Ending collaboration with my brotha.
 import { useDispatch } from "react-redux";
 
 // import state selectors
