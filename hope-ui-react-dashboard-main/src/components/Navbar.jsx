@@ -18,12 +18,10 @@ import { Spinner } from "@nextui-org/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
-
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   const handleClick = () => {
     setLoading(true);
@@ -52,7 +50,9 @@ const Navbar = () => {
           <Box className={classes.navbar_laft}>
             <Box className={classes.navbar_laft_logo}>
               <Link to="/">
-                <span className="text-xl font-bold text-purple-700">ENSACademy </span>
+                <span className="text-xl font-bold text-purple-700">
+                  ENSACademy{" "}
+                </span>
                 {/*<img src={logo} alt="logo" className={classes.img_responsive} />*/}
               </Link>
             </Box>
@@ -61,16 +61,16 @@ const Navbar = () => {
                 <Link to="/" className={`${classes.nav_link}`}>
                   Acceuil
                 </Link>
-                <Link to="main_about" className={`${classes.nav_link}`}>
+                <Link to="/main_about" className={`${classes.nav_link}`}>
                   A propos
                 </Link>
-                <Link to="courses" className={`${classes.nav_link}`}>
+                <Link to="/courses" className={`${classes.nav_link}`}>
                   Cours
                 </Link>
-                <Link to="blog" className={`${classes.nav_link}`}>
+                <Link to="/blog" className={`${classes.nav_link}`}>
                   Blog
                 </Link>
-                <Link to="contact" className={`${classes.nav_link}`}>
+                <Link to="/contact" className={`${classes.nav_link}`}>
                   Contact
                 </Link>
               </Box>
@@ -100,7 +100,7 @@ const Navbar = () => {
                     Home
                   </Link>
                   <Link
-                    to="/about"
+                    to="/main_about"
                     className={`${classes.nav_link} ${classes.nav_link_mobail}`}
                   >
                     About

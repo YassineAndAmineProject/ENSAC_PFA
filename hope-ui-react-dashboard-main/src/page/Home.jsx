@@ -12,6 +12,7 @@ import { settings, testimonial } from "./Common";
 import { Link } from "react-router-dom";
 import { home_count } from "../data";
 import NavBar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const data = [1, 2, 3, 4, 5, 6, 7];
 
@@ -189,6 +190,9 @@ const Home = () => {
           </Box>
         </Container>
       </Box>
+
+      <Footer />
+
     </>
   );
 };

@@ -8,10 +8,10 @@ import StarHalfOutlinedIcon from '@mui/icons-material/StarHalfOutlined';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 const Pagebanner = (props) => {
-    const { title, subtitle, course_time, course_enroll, course_rating, course_expart } = props;
+    const { title, subtitle, course_time, course_enroll, course_rating, course_expart, className } = props;
     const classes = comCss();
     return (
-        <Box className={classes.page_banner}>
+        <Box className={`${className} || ${classes.page_banner}`}>
             <Container maxWidth="lg">
                 <Typography variant="h2" component="h2" className={classes.page_title}>
                     {title}

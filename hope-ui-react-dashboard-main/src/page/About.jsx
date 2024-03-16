@@ -3,11 +3,14 @@ import Pagebanner from "../components/Pagebanner";
 import { pageCss } from "./PageCss";
 import blogimg from "../image/blog.jpg";
 import { Box, Container, Typography } from "@mui/material";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const About = () => {
   const classes = pageCss();
   return (
     <>
+      <Navbar />
       <Pagebanner title="About" />
       <Container maxWidth="lg">
         <Box className={classes.blog_post_img_box}>
@@ -46,6 +49,8 @@ const About = () => {
           </Typography>
         </Box>
       </Container>
+
+      <Footer />
     </>
   );
 };

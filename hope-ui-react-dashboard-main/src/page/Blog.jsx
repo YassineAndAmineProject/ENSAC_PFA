@@ -3,6 +3,8 @@ import { pageCss } from './PageCss'
 import Pagebanner from '../components/Pagebanner'
 import { Box, Container, Grid, Pagination, Stack } from '@mui/material'
 import Blogs from '../components/Blog'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -10,6 +12,8 @@ const Blog = () => {
   const classes = pageCss();
   return (
     <Box>
+      <Navbar />
+
       <Pagebanner
         title="Blog"
       />
@@ -32,6 +36,8 @@ const Blog = () => {
 
         </Container>
       </Box>
+
+      <Footer />
     </Box>
   )
 }

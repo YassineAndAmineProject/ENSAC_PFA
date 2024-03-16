@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 //router
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -19,6 +20,15 @@ import Blog from "./page/Blog";
 import Contact from "./page/Contact";
 import Mantor from "./page/Mantor";
 import SingleCourse from "./page/SingleCourse";
+import SingleBlog from "./page/SingleBlog";
+import AdmissionForm from "./page/AdmissionForm";
+import Faq from "./page/Faq";
+
+import ScrollToTops from "./components/ScrollToTops";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const router = createBrowserRouter(
   [
     {
@@ -38,6 +48,10 @@ const router = createBrowserRouter(
       element: <Blog />,
     },
     {
+      path: "/blog/:id",
+      element: <SingleBlog />,
+    },
+    {
       path: "/contact",
       element: <Contact />,
     },
@@ -49,6 +63,14 @@ const router = createBrowserRouter(
       path: "/singleCourse/:id",
       element: <SingleCourse />,
     },
+    {
+      path: "/faq",
+      element: <Faq />,
+    },
+    {
+      path: "/admissionform",
+      element: <AdmissionForm />,
+    },
     ...DefaultRouter,
     ...IndexRouters,
     ...SimpleRouter,
@@ -58,11 +80,24 @@ const router = createBrowserRouter(
 );
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-      <Provider store={store}>
-        <App>
-          <RouterProvider router={router}></RouterProvider>
-        </App>
-      </Provider>
+    <Provider store={store}>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <App>
+        <RouterProvider router={router}></RouterProvider>
+        <ScrollToTops />
+      </App>
+    </Provider>
   </React.StrictMode>
 );
 

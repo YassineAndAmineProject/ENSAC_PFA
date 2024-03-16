@@ -40,7 +40,7 @@ const VerticalNav = memo((props) => {
       <Accordion as="ul" className="navbar-nav iq-main-menu">
         <li className="nav-item static-item">
           <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
-            <span className="default-icon">Home</span>
+            <span className="default-icon">Acceuil</span>
             <span className="mini-icon">-</span>
           </Link>
         </li>
@@ -77,15 +77,15 @@ const VerticalNav = memo((props) => {
                 ></path>
               </svg>
             </i>
-            <span className="item-name">Dashboard</span>
+            <span className="item-name">Tableau de bord</span>
           </Link>
         </li>
-        <Accordion.Item
+        {/*<Accordion.Item
           as="li"
           eventKey="horizontal-menu"
           bsPrefix={`nav-item ${active === "menustyle" ? "active" : ""} `}
           onClick={() => setActive("menustyle")}
-        >
+         >
           <CustomToggle
             eventKey="horizontal-menu"
             onClick={(activeKey) => setActiveMenu(activeKey)}
@@ -134,8 +134,8 @@ const VerticalNav = memo((props) => {
                 />
               </svg>
             </i>
-          </CustomToggle>
-          <Accordion.Collapse eventKey="horizontal-menu">
+          </CustomToggle>*/}
+        {/*<Accordion.Collapse eventKey="horizontal-menu">
             <ul className="sub-nav">
               <li className="nav-item">
                 <Link
@@ -274,8 +274,8 @@ const VerticalNav = memo((props) => {
               </li>
             </ul>
           </Accordion.Collapse>
-        </Accordion.Item>
-        <li className="nav-item">
+        </Accordion.Item>*/}
+        {/*<li className="nav-item">
           <Link
             className={`${location.pathname === "/" ? "active" : ""} nav-link `}
             aria-current="page"
@@ -311,7 +311,7 @@ const VerticalNav = memo((props) => {
         </li>
         <li>
           <hr className="hr-horizontal" />
-        </li>
+      </li>*/}
         <li className="nav-item static-item">
           <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
             <span className="default-icon">Pages</span>

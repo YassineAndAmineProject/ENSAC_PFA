@@ -3,6 +3,7 @@ import { pageCss } from './PageCss'
 import Pagebanner from '../components/Pagebanner'
 import { Box, Container, Grid, Pagination, Stack } from '@mui/material'
 import Mantors from '../components/Mantor';
+import Navbar from '../components/Navbar';
 
 const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -10,6 +11,8 @@ const Mantor = () => {
   const classes = pageCss();
   return (
     <Box>
+      <Navbar />
+
       <Pagebanner
         title="Les instructeurs"
       />

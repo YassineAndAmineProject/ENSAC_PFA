@@ -341,11 +341,18 @@ export const comCss = makeStyles(() => ({
         background: Theme.colors.base7,
         textAlign: "center",
     },
+    page_banner_singleCourse: {
+        padding: "50px 0px 50px 0px !important",
+        background: Theme.colors.base7,
+        textAlign: "start",
+    },
     page_title: {
         fontFamily: "Inter,sans-serif !important",
         fontSize: "2.5rem !important",
         fontWeight: "600 !important",
         lineHeight: "1.4 !important",
+        textAlign: "center",
+
         color: Theme.colors.base1,
     },
     page_subtitle: {
@@ -560,18 +567,29 @@ export const comCss = makeStyles(() => ({
         borderColor: Theme.colors.base9,
     },
     course_sidebar_button_1: {
+        width: "100%",
         color: Theme.colors.base1,
         backgroundColor: Theme.colors.base7,
         borderColor: Theme.colors.base7,
         display: "block !important",
     },
     course_sidebar_button_2: {
-        color: Theme.colors.base7,
-        border: `1px solid ${Theme.colors.base7}`,
+        color: Theme.colors.like,
+        border: `1px solid ${Theme.colors.like}`,
         display: "block !important",
         "&:hover": {
             color: Theme.colors.base1,
-            backgroundColor: Theme.colors.base7,
+            backgroundColor: Theme.colors.like,
+        },
+    },
+        course_sidebar_button_green: {
+        color: Theme.colors.base9,
+        border: `1px solid ${Theme.colors.base9}`,
+        display: "block !important",
+        marginTop: "10px !important",
+        "&:hover": {
+            color: Theme.colors.base1,
+            backgroundColor: Theme.colors.base9,
         },
     },
     course_sidebar_box_2_title: {
@@ -832,11 +850,29 @@ export const comCss = makeStyles(() => ({
     },
 
     //scroll to top button css
-    scroll_to_top: {
-        color: Theme.colors.base1,
-        background: Theme.colors.base8,
-        transition: "0.7s !important",
-    },
+    // scroll_to_top: {
+    //     color: Theme.colors.base1,
+    //     background: Theme.colors.base8,
+    //     transition: "0.7s !important",
+    // },
+
+        //scroll to top button css
+        scroll_to_top: {
+            color: Theme.colors.base1,
+            background: Theme.colors.base8,
+            transition: "0.3s !important",
+            display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            "&:hover": {
+                color: Theme.colors.base1,
+                background: Theme.colors.base6,
+                borderRadius: '50%',
+                padding: '30px',
+                transition: 'all .3s  ease-in-out',
+                
+            },
+        },
 
     //pagination
     pagination: {

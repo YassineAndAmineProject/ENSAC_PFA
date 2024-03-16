@@ -23,7 +23,7 @@ const Footer = () => {
                   <img src={logo} alt="logo" className={classes.footer_logo} />
                 </Link>
                 <Typography variant="h5" component="h5">
-                  Download Our Mobile App
+                  Téléchargez notre application mobile
                 </Typography>
                 <Box className={classes.footer_1_app_stor}>
                   <Link to="/">
@@ -38,40 +38,40 @@ const Footer = () => {
             <Grid item md={2.5} sm={6} xs={12}>
               <Box className={classes.footer_2}>
                 <Typography variant="h3" component="h3" className={classes.footer_title}>
-                  Company
+                  Entreprise
                 </Typography>
-                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Career</Link>
-                <Link to="/privacypolicy" className={`${classes.nav_link} ${classes.footer_link}`}>Privacy policy</Link>
-                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Become an Affiliate</Link>
-                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Refund policy</Link>
+                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Carrière</Link>
+                <Link to="/privacypolicy" className={`${classes.nav_link} ${classes.footer_link}`}>Politique de confidentialité</Link>
+                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Devenir affilié</Link>
+                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Politique de remboursement</Link>
               </Box>
             </Grid>
             <Grid item md={2.5} sm={6} xs={12}>
               <Box className={classes.footer_3}>
                 <Typography variant="h3" component="h3" className={classes.footer_title}>
-                  Others
+                  Autres
                 </Typography>
-                <Link to="/faq" className={`${classes.nav_link} ${classes.footer_link}`}>Faq</Link>
-                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Notes and Guides</Link>
+                <Link to="/faq" className={`${classes.nav_link} ${classes.footer_link}`}>FAQ</Link>
+                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Notes et guides</Link>
                 <Link to="/blog" className={`${classes.nav_link} ${classes.footer_link}`}>Blog</Link>
-                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Crash Courses</Link>
+                <Link to="/" className={`${classes.nav_link} ${classes.footer_link}`}>Cours intensifs</Link>
               </Box>
             </Grid>
             <Grid item md={3} sm={6} xs={12}>
               <Box className={classes.footer_4}>
                 <Typography variant="h3" component="h3" className={classes.footer_title}>
-                  Keep up with us at
+                  Restez en contact avec nous sur
                 </Typography>
                 <List className={classes.footer_4_list}>
                   <ListItem>
-                    <strong>Call: &nbsp;</strong>
+                    <strong>Appel: &nbsp;</strong>
                     <Link to="/"> 16910</Link>&nbsp;
-                    (8AM - 11PM)
+                    (8h - 23h)
                   </ListItem>
                   <ListItem>
                     <strong>SMS: &nbsp;</strong>
                     <strong>10MSHelp</strong> &nbsp;
-                    to 26969
+                    au 26969
                   </ListItem>
                   <ListItem>
                     <strong>Email:</strong> &nbsp;
@@ -97,7 +97,7 @@ const Footer = () => {
           </Grid>
         </Box>
         <Typography variant="h5" component="p" >
-          © 2022 Geeks. All Rights Reserved
+          © 2024 ENSAC. BAH IBRAHIM & YASSINE EL AZAMI EL IDRISSI
         </Typography>
       </Container>
     </Box>

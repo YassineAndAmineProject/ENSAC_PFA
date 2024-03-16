@@ -26,7 +26,7 @@ const Hero = () => {
               <Button
                 sx={{ marginRight: "12px" }}
                 ccomponent={NavLink}
-                to="/"
+                href="/courses"
                 className={`${classes.button} ${classes.button_3}`}
               >
                 Parcourir les cours

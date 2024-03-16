@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Image, Form, Button, ListGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card";
 
 // img
-import facebook from "../../../assets/images/brands/fb.svg";
-import google from "../../../assets/images/brands/gm.svg";
-import instagram from "../../../assets/images/brands/im.svg";
-import linkedin from "../../../assets/images/brands/li.svg";
-import auth1 from "../../../assets/images/auth/01.png";
+
+import auth1 from "../../../assets/images/auth/laern_5.jpeg";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   let history = useNavigate();
+
+  const [form, setForm] = useState({});
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.id]: e.target.value });
+  };
+
   return (
     <>
       <section className="login-content">
@@ -21,62 +26,19 @@ const SignIn = () => {
               <Col md="10">
                 <Card className="card-transparent shadow-none d-flex justify-content-center mb-0 auth-card">
                   <Card.Body>
-                    <Link
-                      to="/dashboard"
-                      className="navbar-brand d-flex align-items-center mb-3"
+                    <h2 className="mb-2 text-center">Se connecter</h2>
+                    <p className="text-center">
+                      Connecter vous à vtre plateforme d'apprentissage
+                    </p>
+                    <Form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        toast.success("Connexion reussie !");
+                        console.log(form);
+
+                        //history("/dashboard");
+                      }}
                     >
-                      <svg
-                        width="30"
-                        className="text-primary"
-                        viewBox="0 0 30 30"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          x="-0.757324"
-                          y="19.2427"
-                          width="28"
-                          height="4"
-                          rx="2"
-                          transform="rotate(-45 -0.757324 19.2427)"
-                          fill="currentColor"
-                        />
-                        <rect
-                          x="7.72803"
-                          y="27.728"
-                          width="28"
-                          height="4"
-                          rx="2"
-                          transform="rotate(-45 7.72803 27.728)"
-                          fill="currentColor"
-                        />
-                        <rect
-                          x="10.5366"
-                          y="16.3945"
-                          width="16"
-                          height="4"
-                          rx="2"
-                          transform="rotate(45 10.5366 16.3945)"
-                          fill="currentColor"
-                        />
-                        <rect
-                          x="10.5562"
-                          y="-0.556152"
-                          width="28"
-                          height="4"
-                          rx="2"
-                          transform="rotate(45 10.5562 -0.556152)"
-                          fill="currentColor"
-                        />
-                      </svg>
-                      <h4 className="logo-title ms-3">Hope UI</h4>
-                    </Link>
-                    <h2 className="mb-2 text-center">Sign In</h2>
-                    <p className="text-center">Login to stay connected.</p>
-                    <Form onSubmit={(e)=>{
-                     e.preventDefault();    
-                     history("/dashboard");
-                    }}  >
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
@@ -89,13 +51,14 @@ const SignIn = () => {
                               id="email"
                               aria-describedby="email"
                               placeholder=" "
+                              onChange={handleChange}
                             />
                           </Form.Group>
                         </Col>
                         <Col lg="12" className="">
                           <Form.Group className="form-group">
                             <Form.Label htmlFor="password" className="">
-                              Password
+                              Mot de passe
                             </Form.Label>
                             <Form.Control
                               type="password"
@@ -103,61 +66,24 @@ const SignIn = () => {
                               id="password"
                               aria-describedby="password"
                               placeholder=" "
+                              onChange={handleChange}
                             />
                           </Form.Group>
                         </Col>
                         <Col lg="12" className="d-flex justify-content-between">
-                          <Form.Check className="form-check mb-3">
-                            <Form.Check.Input
-                              type="checkbox"
-                              id="customCheck1"
-                            />
-                            <Form.Check.Label htmlFor="customCheck1">
-                              Remember Me
-                            </Form.Check.Label>
-                          </Form.Check>
-                          <Link to="/auth/recoverpw">Forgot Password?</Link>
+                          <Link to="/auth/recoverpw">Mot de passe oublié?</Link>
                         </Col>
                       </Row>
                       <div className="d-flex justify-content-center">
                         <Button type="submit" variant="btn btn-primary">
-                          Sign In
+                          Se connecter
                         </Button>
                       </div>
-                      <p className="text-center my-3">
-                        or sign in with other accounts?
-                      </p>
-                      <div className="d-flex justify-content-center">
-                        <ListGroup
-                          as="ul"
-                          className="list-group-horizontal list-group-flush"
-                        >
-                          <ListGroup.Item as="li" className="border-0 pb-0">
-                            <Link to="#">
-                              <Image src={facebook} alt="fb" />
-                            </Link>
-                          </ListGroup.Item>
-                          <ListGroup.Item as="li" className="border-0 pb-0">
-                            <Link to="#">
-                              <Image src={google} alt="gm" />
-                            </Link>
-                          </ListGroup.Item>
-                          <ListGroup.Item as="li" className="border-0 pb-0">
-                            <Link to="#">
-                              <Image src={instagram} alt="im" />
-                            </Link>
-                          </ListGroup.Item>
-                          <ListGroup.Item as="li" className="border-0 pb-0">
-                            <Link to="#">
-                              <Image src={linkedin} alt="li" />
-                            </Link>
-                          </ListGroup.Item>
-                        </ListGroup>
-                      </div>
+
                       <p className="mt-3 text-center">
-                        Don’t have an account?{" "}
+                        Je n'ai pas de compte ?{" "}
                         <Link to="/auth/sign-up" className="text-underline">
-                          Click here to sign up.
+                          Je m'inscris
                         </Link>
                       </p>
                     </Form>
@@ -220,7 +146,7 @@ const SignIn = () => {
           >
             <Image
               src={auth1}
-              className="Image-fluid gradient-main animated-scaleX"
+              className="Image-fluid gradient-main "
               alt="images"
             />
           </Col>
