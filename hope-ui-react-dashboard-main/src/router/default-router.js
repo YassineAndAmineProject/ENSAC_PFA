@@ -45,6 +45,8 @@ import Admin from "../views/dashboard/admin/admin";
 import Default from "../layouts/dashboard/default";
 import Home from "../page/Home";
 import About from "../page/About";
+import UserAccountSetting from "../views/dashboard/app/user-profile-edit";
+import FormationList from "../views/dashboard/app/formation-list";
 export const DefaultRouter = [
   {
     path: "/",
@@ -83,12 +85,20 @@ export const DefaultRouter = [
         element: <UserProfile />,
       },
       {
+        path: "dashboard/app/user-profile-edit",
+        element: <UserAccountSetting />,
+      },
+      {
         path: "dashboard/app/user-add",
         element: <UserAdd />,
       },
       {
         path: "dashboard/app/user-list",
         element: <UserList />,
+      },
+      {
+        path: "dashboard/app/formation-list",
+        element: <FormationList />,
       },
       {
         path: "dashboard/admin/admin",

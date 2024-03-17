@@ -131,13 +131,13 @@ const UserList =() =>{
                            <thead>
                               <tr className="ligth">
                                  <th>Profile</th>
-                                 <th>Name</th>
-                                 <th>Contact</th>
+                                 <th>Nom & prénom</th>
+                                 
                                  <th>Email</th>
-                                 <th>Country</th>
+                                 <th>Académie</th>
                                  <th>Status</th>
-                                 <th>Company</th>
-                                 <th>Join Date</th>
+                                 <th>Filière</th>
+                             
                                  <th min-width= "100px">Action</th>
                               </tr>
                            </thead>
@@ -147,12 +147,12 @@ const UserList =() =>{
                               <tr key={idx}>
                                  <td className="text-center"><Image className="bg-soft-primary rounded img-fluid avatar-40 me-3" src={item.img} alt="profile"/></td>
                                  <td>{item.name}</td>
-                                 <td>{item.phone}</td>
+                            
                                  <td>{item.email}</td>
                                  <td>{item.country}</td>
                                  <td><span className={`badge ${item.color}`}>{item.status}</span></td>
                                  <td>{item.company}</td>
-                                 <td>{item.joindate}</td>
+                             
                                  <td>
                                     <div className="flex align-items-center list-user-action">
                                        <Link className="btn btn-sm btn-icon btn-success" data-toggle="tooltip" data-placement="top"  title="Add" data-original-title="Add" to="#">
