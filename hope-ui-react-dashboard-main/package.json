@@ -26,6 +26,7 @@
     "apexcharts": "^3.33.0",
     "bootstrap": "^5.2.3",
     "choices.js": "^10.1.0",
+    "cloudinary": "^2.0.3",
     "datatables.net-bs5": "^1.13.4",
     "framer-motion": "^11.0.8",
     "fslightbox-react": "^1.6.2-2",

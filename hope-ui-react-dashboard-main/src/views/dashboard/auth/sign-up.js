@@ -10,7 +10,7 @@ import auth5 from "../../../assets/images/auth/laern_6.jpeg";
 import { MoveLeftIcon } from "lucide-react";
 //import toast from "react-hot-toast";
 import { toast } from "react-toastify";
-import upload from "../../../utils/upload";
+import { upload } from "../../../utils/upload";
 
 const SignUp = () => {
   let history = useNavigate();
