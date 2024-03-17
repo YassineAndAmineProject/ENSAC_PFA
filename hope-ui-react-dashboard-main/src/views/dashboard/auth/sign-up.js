@@ -10,13 +10,25 @@ import auth5 from "../../../assets/images/auth/laern_6.jpeg";
 import { MoveLeftIcon } from "lucide-react";
 //import toast from "react-hot-toast";
 import { toast } from "react-toastify";
+import upload from "../../../utils/upload";
 
 const SignUp = () => {
   let history = useNavigate();
   const [form, setForm] = useState({});
 
+  let [image, setImage] = useState(null);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value.trim() });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const url = await upload(image);
+    setImage(url);
+    toast.info(url);
+    console.log(form);
   };
   //console.log(form);
 
@@ -46,14 +58,7 @@ const SignUp = () => {
                       <h4 className="logo-title ms-3  "> ENSAF</h4>
                     </Link>
                     <p className="text-center">Créer votre compte</p>
-                    <Form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        //toast.success("YOOOOO BRO");
-                        toast.info("Appliquer la requete POST");
-                        console.log(form);
-                      }}
-                    >
+                    <Form onSubmit={handleSubmit}>
                       <Row>
                         <Col lg="6">
                           <Form.Group className="form-group">
@@ -183,6 +188,13 @@ const SignUp = () => {
                           </div>
                         </Col>*/}
                       </Row>
+                      <input
+                        type="file"
+                        onChange={(e) => setImage(e.target.files[0])}
+                      />
+                      {image && (
+                        <img src={image} alt="image" className="img-fluid" />
+                      )}
                       <div className="d-grid justify-content-center">
                         <Button
                           className="btn btn-primary"
