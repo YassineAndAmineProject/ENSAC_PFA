@@ -28,6 +28,8 @@ const SignUp = () => {
     const url = await upload(image);
     setImage(url);
     toast.info(url);
+
+    console.log(url);
     console.log(form);
   };
   //console.log(form);
