@@ -24,6 +24,7 @@
     "@reduxjs/toolkit": "^1.8.1",
     "aos": "^2.3.4",
     "apexcharts": "^3.33.0",
+    "axios": "^1.6.8",
     "bootstrap": "^5.2.3",
     "choices.js": "^10.1.0",
     "cloudinary": "^2.0.3",
