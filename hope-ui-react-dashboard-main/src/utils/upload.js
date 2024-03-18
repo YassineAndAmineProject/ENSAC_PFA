@@ -16,7 +16,6 @@ export const upload = async (file) => {
       "https://api.cloudinary.com/v1_1/dg9qkizkk/image/upload",
       data
     );
-
     const { url } = res.data;
     return url;
   } catch (err) {
