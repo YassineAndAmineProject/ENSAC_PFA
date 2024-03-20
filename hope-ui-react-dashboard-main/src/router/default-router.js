@@ -48,6 +48,8 @@ import About from "../page/About";
 import UserAccountSetting from "../views/dashboard/app/user-profile-edit";
 import FormationList from "../views/dashboard/app/formation-list";
 import UserProvider from "../context/userContext";
+import Logout from "../components/partials/dashboard/FunctionnalityComponent/Logout";
+// petite remarque : ouvre le composant Default, tu trouveras un Outlet dans lequel les "children" varient ainsi que tu trouveras l'élément Header qui est fixe...
 export const DefaultRouter = [
   {
     path: "/",
@@ -216,6 +218,12 @@ export const DefaultRouter = [
             <DualTone />
         ),
       },
+      {
+        path:"logout", 
+        element:(
+          <Logout />
+        )
+      }
     ],
   },
 ];
