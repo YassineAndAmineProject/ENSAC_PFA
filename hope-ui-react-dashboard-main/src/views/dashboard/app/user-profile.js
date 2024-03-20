@@ -36,7 +36,7 @@ import ShareOffcanvas from "../../../components/partials/components/shareoffcanv
 import { UserContext } from "../../../context/userContext";
 const UserProfile = () => {
   const [toggler, setToggler] = useState();
-  // LOGIQUE BACKEND COMMENCE ICI :: 
+  // LOGIQUE BACKEND COMMENCE ICI ::
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
@@ -121,7 +121,6 @@ const UserProfile = () => {
                     <Nav.Item as="li">
                       <Nav.Link eventKey="third">Activity</Nav.Link>
                     </Nav.Item>
-
                   </Nav>
                 </div>
               </Card.Body>
