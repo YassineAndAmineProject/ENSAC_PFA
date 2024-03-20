@@ -1,11 +1,12 @@
-import {memo,Fragment}  from 'react'
+import {memo,Fragment, useContext, useEffect}  from 'react'
 import {Row,Col} from 'react-bootstrap'
 import Card from '../../../components/Card'
 import Chart from "react-apexcharts"
 
 // import CounterUps from '../../../components/counterup'
 import CountUp from 'react-countup';
-
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../context/userContext'; 
 const Widgetchart = memo((props) => {
   
    const chart1 ={
@@ -672,7 +673,15 @@ const Widgetchart = memo((props) => {
        }]
      
    }
-     
+   // LOGIQUE BACKEND COMMENCE ICI :: 
+   const navigate = useNavigate();
+   const { currentUser } = useContext(UserContext);
+   const token = currentUser?.token;
+   useEffect(() => {
+     if (!token) {
+       navigate("/auth/sign-in");
+     }
+   }, []);  
    return (
       <Fragment>
          <Row>

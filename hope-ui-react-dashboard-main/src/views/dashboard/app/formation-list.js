@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Row, Col, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card";
 
 // img
@@ -10,7 +10,7 @@ import shap3 from "../../../assets/images/shapes/03.png";
 import shap4 from "../../../assets/images/shapes/04.png";
 import shap5 from "../../../assets/images/shapes/05.png";
 import shap6 from "../../../assets/images/shapes/06.png";
-
+import { UserContext } from "../../../context/userContext";
 const userlist = [
   {
     img: `${shap1}`,
@@ -114,6 +114,14 @@ const userlist = [
 ];
 
 const FormationList = () => {
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
   return (
     <>
       <div>

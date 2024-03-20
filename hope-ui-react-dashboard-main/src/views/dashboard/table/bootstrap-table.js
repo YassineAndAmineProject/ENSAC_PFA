@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Row, Col, Image, Table } from "react-bootstrap";
 import Card from "../../../components/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //progressbar
 import Progress from "../../../components/progress.js";
@@ -13,8 +13,16 @@ import shap3 from "../../../assets/images/shapes/03.png";
 import shap4 from "../../../assets/images/shapes/04.png";
 import shap5 from "../../../assets/images/shapes/05.png";
 import shap6 from "../../../assets/images/shapes/06.png";
-
+import { UserContext } from "../../../context/userContext.js";
 const BootstrapTable = () => {
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
   return (
     <>
       <Row>

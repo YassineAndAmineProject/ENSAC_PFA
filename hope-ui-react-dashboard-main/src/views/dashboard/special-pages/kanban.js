@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Col, Row, Dropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card";
 import CustomToggle from "../../../components/dropdowns";
 import { ReactSortable } from "react-sortablejs";
-
+import { UserContext } from "../../../context/userContext";
 const Kanban = () => {
   const [state1, setState1] = useState([
     { id: 1, name: "Create Sidebar in Dashboard" },
@@ -22,7 +22,15 @@ const Kanban = () => {
   const [state4, setState4] = useState([
     { id: 6, name: "Admin Panel Customization" },
   ]);
-
+  //LOGIQUE BACKEND COMMENCE ICI ::
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
   return (
     <>
       <Row className="">

@@ -1,22 +1,42 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Row, Col, Image, Form, Button, ListGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../../../components/Card";
-
 // img
-
 import auth1 from "../../../assets/images/auth/laern_5.jpeg";
 import { toast } from "react-toastify";
-
+import { UserContext } from "../../../context/userContext";
+import axios from "axios";
 const SignIn = () => {
-  let history = useNavigate();
-
-  const [form, setForm] = useState({});
-
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.id]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+  const { setCurrentUser } = useContext(UserContext);
+  const loginUser = async (e) => {
+    console.log(process.env.REACT_APP_BASE_URL);
+    e.preventDefault();
+    setError("");
+    try {
+      const result = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/students/login`,
+        form
+      );
+      const user = await result.data;
+      console.log(user);
+      setCurrentUser(user);
+      navigate("/dashboard"); 
+    } catch (err) {
+      toast.error("Echec de connexion ");
+      console.log(err.response.data);
+      setError(err.response.data);
+    }
+  };
   return (
     <>
       <section className="login-content">
@@ -30,15 +50,23 @@ const SignIn = () => {
                     <p className="text-center">
                       Connecter vous à vtre plateforme d'apprentissage
                     </p>
-                    <Form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        toast.success("Connexion reussie !");
-                        console.log(form);
-
-                        //history("/dashboard");
-                      }}
-                    >
+                    <Form onSubmit={loginUser}>
+                      {" "}
+                      {error && (
+                        <p
+                          style={{
+                            background: "rgb(255, 63, 63)",
+                            color: "white",
+                            fontSize: "0.8rem",
+                            padding: "0.6rem 1rem",
+                            borderRadius: "0.3rem",
+                            display: "block",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          {error}
+                        </p>
+                      )}
                       <Row>
                         <Col lg="12">
                           <Form.Group className="form-group">
@@ -48,10 +76,11 @@ const SignIn = () => {
                             <Form.Control
                               type="email"
                               className=""
-                              id="email"
+                              name="email"
                               aria-describedby="email"
                               placeholder=" "
                               onChange={handleChange}
+                              value={form.email}
                             />
                           </Form.Group>
                         </Col>
@@ -63,10 +92,11 @@ const SignIn = () => {
                             <Form.Control
                               type="password"
                               className=""
-                              id="password"
+                              name="password"
                               aria-describedby="password"
                               placeholder=" "
                               onChange={handleChange}
+                              value={form.password}
                             />
                           </Form.Group>
                         </Col>
@@ -79,7 +109,6 @@ const SignIn = () => {
                           Se connecter
                         </Button>
                       </div>
-
                       <p className="mt-3 text-center">
                         Je n'ai pas de compte ?{" "}
                         <Link to="/auth/sign-up" className="text-underline">

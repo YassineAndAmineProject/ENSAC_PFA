@@ -1,6 +1,6 @@
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useContext } from "react";
 import { Row, Col, Dropdown, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //circular
 import Circularprogressbar from "../../../components/circularprogressbar.js";
@@ -36,237 +36,246 @@ import { useSelector } from "react-redux";
 
 // Import selectors & action from setting store
 import * as SettingSelector from "../../../store/setting/selectors";
-
+import { UserContext } from "../../../context/userContext.js";
 // install Swiper modules
 SwiperCore.use([Navigation]);
 
 const RtlSupport = () => {
-    useSelector(SettingSelector.theme_color);
+  useSelector(SettingSelector.theme_color);
 
-    const getVariableColor = () => {
-      let prefix =
-        getComputedStyle(document.body).getPropertyValue("--prefix") || "bs-";
-      if (prefix) {
-        prefix = prefix.trim();
-      }
-      const color1 = getComputedStyle(document.body).getPropertyValue(
-        `--${prefix}primary`
-      );
-      const color2 = getComputedStyle(document.body).getPropertyValue(
-        `--${prefix}info`
-      );
-      const color3 = getComputedStyle(document.body).getPropertyValue(
-        `--${prefix}primary-tint-20`
-      );
-      const color4 = getComputedStyle(document.body).getPropertyValue(
-        `--${prefix}warning`
-      );
-      return {
-        primary: color1.trim(),
-        info: color2.trim(),
-        warning: color4.trim(),
-        primary_light: color3.trim(),
-      };
+  const getVariableColor = () => {
+    let prefix =
+      getComputedStyle(document.body).getPropertyValue("--prefix") || "bs-";
+    if (prefix) {
+      prefix = prefix.trim();
+    }
+    const color1 = getComputedStyle(document.body).getPropertyValue(
+      `--${prefix}primary`
+    );
+    const color2 = getComputedStyle(document.body).getPropertyValue(
+      `--${prefix}info`
+    );
+    const color3 = getComputedStyle(document.body).getPropertyValue(
+      `--${prefix}primary-tint-20`
+    );
+    const color4 = getComputedStyle(document.body).getPropertyValue(
+      `--${prefix}warning`
+    );
+    return {
+      primary: color1.trim(),
+      info: color2.trim(),
+      warning: color4.trim(),
+      primary_light: color3.trim(),
     };
-    const variableColors = getVariableColor();
-  
-    const colors = [variableColors.primary, variableColors.info];
-    useEffect(() => {
-      return () => colors;
+  };
+  const variableColors = getVariableColor();
+
+  const colors = [variableColors.primary, variableColors.info];
+  useEffect(() => {
+    return () => colors;
+  });
+
+  useEffect(() => {
+    AOS.init({
+      startEvent: "DOMContentLoaded",
+      disable: function () {
+        var maxWidth = 996;
+        return window.innerWidth < maxWidth;
+      },
+      throttleDelay: 10,
+      once: true,
+      duration: 700,
+      offset: 10,
     });
-  
-    useEffect(() => {
-      AOS.init({
-        startEvent: "DOMContentLoaded",
-        disable: function () {
-          var maxWidth = 996;
-          return window.innerWidth < maxWidth;
+  });
+  const chart1 = {
+    options: {
+      chart: {
+        fontFamily:
+          '"Inter", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+        toolbar: {
+          show: false,
         },
-        throttleDelay: 10,
-        once: true,
-        duration: 700,
-        offset: 10,
-      });
-    });
-    const chart1 = {
-      options: {
-        chart: {
-          fontFamily:
-            '"Inter", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-          toolbar: {
-            show: false,
-          },
-          sparkline: {
-            enabled: false,
-          },
-        },
-        colors: colors,
-        dataLabels: {
+        sparkline: {
           enabled: false,
         },
-        stroke: {
-          curve: "smooth",
-          width: 3,
-        },
-        yaxis: {
+      },
+      colors: colors,
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+        width: 3,
+      },
+      yaxis: {
+        show: true,
+        labels: {
           show: true,
-          labels: {
-            show: true,
-            minWidth: 19,
-            maxWidth: 19,
-            style: {
-              colors: "#8A92A6",
-            },
-            offsetX: -5,
+          minWidth: 19,
+          maxWidth: 19,
+          style: {
+            colors: "#8A92A6",
           },
-        },
-        legend: {
-          show: false,
-        },
-        xaxis: {
-          labels: {
-            minHeight: 22,
-            maxHeight: 22,
-            show: true,
-            style: {
-              colors: "#8A92A6",
-            },
-          },
-          lines: {
-            show: false, //or just here to disable only x axis grids
-          },
-          categories: ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug"],
-        },
-        grid: {
-          show: false,
-        },
-        fill: {
-          type: "gradient",
-          gradient: {
-            shade: "dark",
-            type: "vertical",
-            shadeIntensity: 0,
-            gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
-            inverseColors: true,
-            opacityFrom: 0.4,
-            opacityTo: 0.1,
-            stops: [0, 50, 80],
-            colors: colors,
-          },
-        },
-        tooltip: {
-          enabled: true,
+          offsetX: -5,
         },
       },
-      series: [
-        {
-          name: "total",
-          data: [94, 80, 94, 80, 94, 80, 94],
-        },
-        {
-          name: "pipline",
-          data: [72, 60, 84, 60, 74, 60, 78],
-        },
-      ],
-    };
-  
-    //chart2
-    const chart2 = {
-      options: {
-        colors: colors,
-        plotOptions: {
-          radialBar: {
-            hollow: {
-              margin: 10,
-              size: "50%",
-            },
-            track: {
-              margin: 10,
-              strokeWidth: "50%",
-            },
-            dataLabels: {
-              show: false,
-            },
+      legend: {
+        show: false,
+      },
+      xaxis: {
+        labels: {
+          minHeight: 22,
+          maxHeight: 22,
+          show: true,
+          style: {
+            colors: "#8A92A6",
           },
         },
-        labels: ["Apples", "Oranges"],
+        lines: {
+          show: false, //or just here to disable only x axis grids
+        },
+        categories: ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug"],
       },
-      series: [55, 75],
-    };
-    const chart3 = {
-      options: {
-        chart: {
-          stacked: true,
-          toolbar: {
+      grid: {
+        show: false,
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "vertical",
+          shadeIntensity: 0,
+          gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
+          inverseColors: true,
+          opacityFrom: 0.4,
+          opacityTo: 0.1,
+          stops: [0, 50, 80],
+          colors: colors,
+        },
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    series: [
+      {
+        name: "total",
+        data: [94, 80, 94, 80, 94, 80, 94],
+      },
+      {
+        name: "pipline",
+        data: [72, 60, 84, 60, 74, 60, 78],
+      },
+    ],
+  };
+
+  //chart2
+  const chart2 = {
+    options: {
+      colors: colors,
+      plotOptions: {
+        radialBar: {
+          hollow: {
+            margin: 10,
+            size: "50%",
+          },
+          track: {
+            margin: 10,
+            strokeWidth: "50%",
+          },
+          dataLabels: {
             show: false,
           },
         },
-        colors: colors,
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: "28%",
-            endingShape: "rounded",
-            borderRadius: 5,
-          },
-        },
-        legend: {
+      },
+      labels: ["Apples", "Oranges"],
+    },
+    series: [55, 75],
+  };
+  const chart3 = {
+    options: {
+      chart: {
+        stacked: true,
+        toolbar: {
           show: false,
         },
-        dataLabels: {
-          enabled: false,
+      },
+      colors: colors,
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "28%",
+          endingShape: "rounded",
+          borderRadius: 5,
         },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ["transparent"],
-        },
-        xaxis: {
-          categories: ["S", "M", "T", "W", "T", "F", "S", "M", "T", "W"],
-          labels: {
-            minHeight: 20,
-            maxHeight: 20,
-            style: {
-              colors: "#8A92A6",
-            },
-          },
-        },
-        yaxis: {
-          title: {
-            text: "",
-          },
-          labels: {
-            minWidth: 19,
-            maxWidth: 19,
-            style: {
-              colors: "#8A92A6",
-            },
-          },
-        },
-        fill: {
-          opacity: 1,
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "$ " + val + " thousands";
-            },
+      },
+      legend: {
+        show: false,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["transparent"],
+      },
+      xaxis: {
+        categories: ["S", "M", "T", "W", "T", "F", "S", "M", "T", "W"],
+        labels: {
+          minHeight: 20,
+          maxHeight: 20,
+          style: {
+            colors: "#8A92A6",
           },
         },
       },
-      series: [
-        {
-          name: "Successful deals",
-          data: [30, 50, 35, 60, 40, 60, 60, 30, 50, 35],
+      yaxis: {
+        title: {
+          text: "",
         },
-        {
-          name: "Failed deals",
-          data: [40, 50, 55, 50, 30, 80, 30, 40, 50, 55],
+        labels: {
+          minWidth: 19,
+          maxWidth: 19,
+          style: {
+            colors: "#8A92A6",
+          },
         },
-      ],
-    };
-    return (
-        <Fragment>
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return "$ " + val + " thousands";
+          },
+        },
+      },
+    },
+    series: [
+      {
+        name: "Successful deals",
+        data: [30, 50, 35, 60, 40, 60, 60, 30, 50, 35],
+      },
+      {
+        name: "Failed deals",
+        data: [40, 50, 55, 50, 30, 80, 30, 40, 50, 55],
+      },
+    ],
+  };
+  // LOGIQUE BACKEND COMMENCE ICI :
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
+  return (
+    <Fragment>
       <Row>
         <Col md="12" lg="12">
           <Row className="row-cols-1">
@@ -287,7 +296,7 @@ const RtlSupport = () => {
                   1500: { slidesPerView: 4 },
                   1920: { slidesPerView: 4 },
                   2040: { slidesPerView: 7 },
-                  2440: { slidesPerView: 8 }
+                  2440: { slidesPerView: 8 },
                 }}
                 data-aos="fade-up"
               >
@@ -1206,7 +1215,7 @@ const RtlSupport = () => {
         </Col>
       </Row>
     </Fragment>
-    );
-}
+  );
+};
 
 export default RtlSupport;

@@ -47,10 +47,15 @@ import Home from "../page/Home";
 import About from "../page/About";
 import UserAccountSetting from "../views/dashboard/app/user-profile-edit";
 import FormationList from "../views/dashboard/app/formation-list";
+import UserProvider from "../context/userContext";
 export const DefaultRouter = [
   {
     path: "/",
-    element: <Default />,
+    element: (
+      <UserProvider>
+        <Default />
+      </UserProvider>
+    ),
     children: [
       {
         path: "dashboard",
@@ -58,108 +63,158 @@ export const DefaultRouter = [
       },
       {
         path: "dashboard/special-pages/billing",
-        element: <Billing />,
+        element: (
+            <Billing />
+        ),
       },
       {
         path: "dashboard/special-pages/calender",
-        element: <Calender />,
+        element: (
+            <Calender />
+        ),
       },
       {
         path: "dashboard/special-pages/kanban",
-        element: <Kanban />,
+        element: (
+            <Kanban />
+        ),
       },
       {
         path: "dashboard/special-pages/pricing",
-        element: <Pricing />,
+        element: (
+            <Pricing />
+        ),
       },
       {
         path: "dashboard/special-pages/timeline",
-        element: <Timeline />,
+        element: (
+            <Timeline />
+        ),
       },
       {
         path: "dashboard/special-pages/rtl-support",
-        element: <RtlSupport />,
+        element: (
+            <RtlSupport />
+        ),
       },
       {
         path: "dashboard/app/user-profile",
-        element: <UserProfile />,
+        element: (
+            <UserProfile />
+        ),
       },
       {
         path: "dashboard/app/user-profile-edit",
-        element: <UserAccountSetting />,
+        element: (
+            <UserAccountSetting />
+        ),
       },
       {
         path: "dashboard/app/user-add",
-        element: <UserAdd />,
+        element: (
+            <UserAdd />
+        ),
       },
       {
         path: "dashboard/app/user-list",
-        element: <UserList />,
+        element: (
+            <UserList />
+        ),
       },
       {
         path: "dashboard/app/formation-list",
-        element: <FormationList />,
+        element: (
+            <FormationList />
+        ),
       },
       {
         path: "dashboard/admin/admin",
-        element: <Admin />,
+        element: (
+            <Admin />
+        ),
       },
       // Widget
       {
         path: "dashboard/widget/widgetbasic",
-        element: <Widgetbasic />,
+        element: (
+            <Widgetbasic />
+        ),
       },
       {
         path: "dashboard/widget/widgetchart",
-        element: <Widgetchart />,
+        element: (
+            <Widgetchart />
+        ),
       },
       {
         path: "dashboard/widget/widgetcard",
-        element: <Widgetcard />,
+        element: (
+            <Widgetcard />
+        ),
       },
       // Map
       {
         path: "dashboard/map/google",
-        element: <Google />,
+        element: (
+            <Google />
+        ),
       },
       {
         path: "dashboard/map/vector",
-        element: <Vector />,
+        element: (
+            <Vector />
+        ),
       },
       // Form
       {
         path: "dashboard/form/form-element",
-        element: <FormElement />,
+        element: (
+            <FormElement />
+        ),
       },
       {
         path: "dashboard/form/form-wizard",
-        element: <FormWizard />,
+        element: (
+            <FormWizard />
+        ),
       },
       {
         path: "dashboard/form/form-validation",
-        element: <FormValidation />,
+        element: (
+            <FormValidation />
+        ),
       },
       // Table
       {
         path: "dashboard/table/bootstrap-table",
-        element: <BootstrapTable />,
+        element: (
+            <BootstrapTable />
+        ),
       },
       {
         path: "dashboard/table/table-data",
-        element: <TableData />,
+        element: (
+            <TableData />
+        ),
       },
       // Icon
       {
         path: "dashboard/icon/solid",
-        element: <Solid />,
+        element: (
+            <Solid />
+        ),
       },
       {
         path: "dashboard/icon/outline",
-        element: <Outline />,
+        element: (
+            <Outline />
+        ),
       },
       {
         path: "dashboard/icon/dual-tone",
-        element: <DualTone />,
+        element: (
+            <DualTone />
+        ),
       },
     ],
   },

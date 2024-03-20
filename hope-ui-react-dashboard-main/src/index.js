@@ -28,48 +28,88 @@ import ScrollToTops from "./components/ScrollToTops";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import UserProvider from "./context/userContext";
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <Home />,
+      element: (
+        <UserProvider>
+          <Home />
+        </UserProvider>
+      ),
     },
     {
       path: "/main_about",
-      element: <About />,
+      element: (
+        <UserProvider>
+          <About />
+        </UserProvider>
+      ),
     },
     {
       path: "/courses",
-      element: <Courses />,
+      element: (
+        <UserProvider>
+          <Courses />
+        </UserProvider>
+      ),
     },
     {
       path: "/blog",
-      element: <Blog />,
+      element: (
+        <UserProvider>
+          <Blog />
+        </UserProvider>
+      ),
     },
     {
       path: "/blog/:id",
-      element: <SingleBlog />,
+      element: (
+        <UserProvider>
+          <SingleBlog />
+        </UserProvider>
+      ),
     },
     {
       path: "/contact",
-      element: <Contact />,
+      element: (
+        <UserProvider>
+          <Contact />
+        </UserProvider>
+      ),
     },
     {
       path: "/mantor",
-      element: <Mantor />,
+      element: (
+        <UserProvider>
+          <Mantor />
+        </UserProvider>
+      ),
     },
     {
       path: "/singleCourse/:id",
-      element: <SingleCourse />,
+      element: (
+        <UserProvider>
+          <SingleCourse />
+        </UserProvider>
+      ),
     },
     {
       path: "/faq",
-      element: <Faq />,
+      element: (
+        <UserProvider>
+          <Faq />
+        </UserProvider>
+      ),
     },
     {
       path: "/admissionform",
-      element: <AdmissionForm />,
+      element: (
+        <UserProvider>
+          <AdmissionForm />
+        </UserProvider>
+      ),
     },
     ...DefaultRouter,
     ...IndexRouters,

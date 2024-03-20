@@ -1,10 +1,10 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useEffect, useState } from "react";
 import FsLightbox from "fslightbox-react";
 
 import { Row, Col, Image, Form, Nav, Dropdown, Tab } from "react-bootstrap";
 import Card from "../../../components/Card";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // img
 
 import avatars11 from "../../../assets/images/avatars/01.png";
@@ -33,9 +33,18 @@ import shap6 from "../../../assets/images/shapes/06.png";
 import pages2 from "../../../assets/images/pages/02-page.png";
 
 import ShareOffcanvas from "../../../components/partials/components/shareoffcanvas";
-
+import { UserContext } from "../../../context/userContext";
 const UserProfile = () => {
   const [toggler, setToggler] = useState();
+  // LOGIQUE BACKEND COMMENCE ICI :: 
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
   return (
     <Fragment>
       <FsLightbox

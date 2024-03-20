@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col, Image, Form, Button, ListGroup } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
+
 import Card from "../../../components/Card";
 
 // img
@@ -11,26 +13,60 @@ import { MoveLeftIcon } from "lucide-react";
 //import toast from "react-hot-toast";
 import { toast } from "react-toastify";
 import { upload } from "../../../utils/upload";
-
+import { FaFileUpload } from "react-icons/fa";
+import { AiFillCloseCircle } from "react-icons/ai";
+import axios from "axios";
 const SignUp = () => {
-  let history = useNavigate();
-  const [form, setForm] = useState({});
-
-  let [image, setImage] = useState(null);
-
+  const [loadingPreview, setLoadingPreview] = useState(true);
+  const [url, setUrl] = useState("");
+  const [avatarChanged, setAvatarChanged] = useState(false);
+  const [dispPic, setDispPic] = useState(false);
+  const [profilePicture, setProfilePicture] = useState();
+  const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+  const [error, setError] = useState("");
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.id]: e.target.value.trim() });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+  const sendPic = async () => {
+    setLoadingPreview(true);
+    const urlOb = await upload(profilePicture);
+    setUrl(urlOb);
+    setForm({ ...form, profilePicture: urlOb });
+    setLoadingPreview(false);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const url = await upload(image);
-    setImage(url);
-    toast.info(url);
-
     console.log(url);
-    console.log(form);
+    try {
+      console.log("Data sent within the request is : ");
+      console.log(form);
+      const response = await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/students/register`,
+        form
+      );
+      console.log("Resp data : ");
+      console.log(response.data);
+      toast.success("Registered Successfully");
+      setForm({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        password2: "",
+      });
+      setAvatarChanged(false);
+      setDispPic(false);
+      setError("");
+    } catch (err) {
+      console.log(err);
+      setError(err.response.data);
+    }
   };
   //console.log(form);
 
@@ -61,18 +97,33 @@ const SignUp = () => {
                     </Link>
                     <p className="text-center">Créer votre compte</p>
                     <Form onSubmit={handleSubmit}>
+                      {error && (
+                        <p
+                          style={{
+                            background: "rgb(255, 63, 63)",
+                            color: "white",
+                            fontSize: "0.8rem",
+                            padding: "0.6rem 1rem",
+                            borderRadius: "0.3rem",
+                            display: "block",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          {error}
+                        </p>
+                      )}
                       <Row>
                         <Col lg="6">
                           <Form.Group className="form-group">
-                            <Form.Label htmlFor="LastName" className="">
+                            <Form.Label htmlFor="lastname" className="">
                               Nom
                             </Form.Label>
                             <Form.Control
                               type="text"
                               className=""
-                              id="lastName"
-                              placeholder=" "
+                              name="lastname"
                               onChange={handleChange}
+                              value={form.lastname}
                             />
                           </Form.Group>
                         </Col>
@@ -84,9 +135,9 @@ const SignUp = () => {
                             <Form.Control
                               type="text"
                               className=""
-                              id="firstName"
-                              placeholder=" "
+                              name="firstname"
                               onChange={handleChange}
+                              value={form.firstname}
                             />
                           </Form.Group>
                         </Col>
@@ -98,13 +149,12 @@ const SignUp = () => {
                             <Form.Control
                               type="email"
                               className=""
-                              id="email"
-                              placeholder=" "
+                              name="email"
                               onChange={handleChange}
+                              value={form.email}
                             />
                           </Form.Group>
                         </Col>
-
                         <Col lg="12">
                           <Form.Group className="form-group">
                             <Form.Label htmlFor="password" className="">
@@ -113,41 +163,23 @@ const SignUp = () => {
                             <Form.Control
                               type="password"
                               className=""
-                              id="password"
-                              placeholder=" "
+                              name="password"
                               onChange={handleChange}
+                              value={form.password}
                             />
                           </Form.Group>
                         </Col>
                         <Col lg="12">
-                          <Form.Group className="form-group ">
+                          <Form.Group className="form-group">
                             <Form.Label htmlFor="confirm-password" className="">
                               Confirmer le mot de passe
                             </Form.Label>
                             <Form.Control
-                              type="text"
-                              className=""
-                              id="confirm-password"
-                              placeholder=" "
-                            />
-                          </Form.Group>
-                        </Col>
-                        <Col lg="12">
-                          <Form.Group className="form-group ">
-                            <Form.Label htmlFor="validationDefault04">
-                              Role
-                            </Form.Label>
-                            <Form.Select
-                              id="role"
+                              type="password"
+                              name="password2"
                               onChange={handleChange}
-                              required
-                            >
-                              <option defaultValue>
-                                Je m'inscris en tant que
-                              </option>
-                              <option value={"Professeur"}>Professeur</option>
-                              <option value={"Etudiant"}>Etudiant</option>
-                            </Form.Select>
+                              value={form.password2}
+                            />
                           </Form.Group>
                         </Col>
                         {/*<Col
@@ -190,13 +222,103 @@ const SignUp = () => {
                           </div>
                         </Col>*/}
                       </Row>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          position: "relative",
+                        }}
+                      >
+                        Select picture :
+                        {
+                          <label
+                            onClick={() => {
+                              setAvatarChanged(true);
+                            }}
+                            htmlFor="picture"
+                            style={{
+                              fontSize: "1.3rem",
+                              width: "3rem",
+                              height: "3rem",
+                              display: "grid",
+                              placeItems: "center",
+                              borderRadius: "50%",
+                              cursor: "pointer",
+                              background: "#5356FF",
+                              color: "white",
+                              position: "absolute",
+                              right: "0",
+                            }}
+                          >
+                            <FaFileUpload />
+                          </label>
+                        }
+                        {avatarChanged && (
+                          <div
+                            onClick={() => {
+                              setDispPic(true);
+                              sendPic();
+                            }}
+                            style={{
+                              fontSize: "1.3rem",
+                              width: "3rem",
+                              height: "3rem",
+                              display: "grid",
+                              placeItems: "center",
+                              borderRadius: "50%",
+                              cursor: "pointer",
+                              background: "#5356FF",
+                              color: "white",
+                              position: "absolute",
+                              border: "none",
+                              right: "0",
+                            }}
+                          >
+                            <FaCheck />
+                          </div>
+                        )}
+                      </div>
+                      {dispPic &&
+                        (!loadingPreview ? (
+                          <div
+                            id="profile-preview"
+                            style={{
+                              width: "10rem",
+                              height: "10rem",
+                              position: "relative",
+                            }}
+                          >
+                            <img
+                              style={{ width: "100%", objectFit: "cover" }}
+                              src={url}
+                            />
+                            <AiFillCloseCircle
+                              onClick={() => {
+                                setDispPic(false);
+                                setAvatarChanged(false);
+                              }}
+                              style={{
+                                position: "absolute",
+                                top: "0",
+                                right: "0",
+                                color: "white",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          "Loading preview..."
+                        ))}
                       <input
+                        style={{ visibility: "hidden" }}
+                        name="picture"
+                        id="picture"
                         type="file"
-                        onChange={(e) => setImage(e.target.files[0])}
+                        onChange={(e) => {
+                          setProfilePicture(e.target.files[0]);
+                        }}
                       />
-                      {image && (
-                        <img src={image} alt="image" className="img-fluid" />
-                      )}
                       <div className="d-grid justify-content-center">
                         <Button
                           className="btn btn-primary"
@@ -294,3 +416,23 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+/*
+  avatarChanged && (
+                          <button
+                            style={{
+                              fontSize: "1.3rem",
+                              width: "3rem",
+                              height: "3rem",
+                              display: "grid",
+                              placeItems: "center",
+                              borderRadius: "50%",
+                              cursor: "pointer",
+                              background: "#5356FF",
+                              color: "white",
+                            }}
+                          >
+                            <FaCheck />
+                          </button>
+                        )
+*/

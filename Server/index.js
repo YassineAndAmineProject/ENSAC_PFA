@@ -1,15 +1,15 @@
 const express = require("express");
-const { connect } = require("mongoose");
 const cors = require("cors");
-const path = require("path");
+const { connect } = require("mongoose");
 require("dotenv").config();
-const handleError = require("./middlewares/handleError"); 
+const handleError = require("./middlewares/handleError");
+const studentRoutes = require("./Routes/StudentRoute");
 const app = express();
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "uploads")));
-app.use(handleError);  
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use("/api/students", studentRoutes);
+app.use(handleError);
 app.all("/*", (req, res) => {
   res.status(404);
   if (req.accepts("application/json")) {
@@ -22,13 +22,10 @@ app.all("/*", (req, res) => {
 });
 connect(process.env.CONNECTION_STRING)
   .then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log("Server launched on port " + process.env.PORT);
+    app.listen(process.env.PORT || 5000, () => {
+      console.log(`Server launched on port : ${process.env.PORT}`);
     });
   })
   .catch((err) => {
-    console.log(
-      "An error occured trying to establish a connection with the database !" +
-        err
-    );
+    console.log("Error trying to connect to the database " + err);
   });

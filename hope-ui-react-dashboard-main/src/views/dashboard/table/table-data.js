@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import Card from "../../../components/Card";
 import DataTable from "../../../components/DataTable";
-
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../context/userContext";
 const DataTableOptions = {
   columns: [
     { title: "Name" },
@@ -90,6 +91,14 @@ const DataTableOptions = {
   ],
 };
 const TableData = () => {
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
   return (
     <>
       <Row>

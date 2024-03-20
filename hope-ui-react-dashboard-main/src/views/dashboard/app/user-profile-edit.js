@@ -1,13 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Row, Col, Form, Image } from "react-bootstrap";
 import Card from "../../../components/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // img
 import imgsuccess from "../../../assets/images/pages/img-success.png";
-
+import { UserContext } from "../../../context/userContext";
 const UserAccountSetting = () => {
   const [show, AccountShow] = useState("A");
-
+  // LOGIQUE BACKEND COMMENCE ICI :
+  const navigate = useNavigate();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  useEffect(() => {
+    if (!token) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
   return (
     <>
       <div>
@@ -314,7 +322,6 @@ const UserAccountSetting = () => {
                           accept="image/*"
                         />
                       </div>
-                      
                     </div>
                     <button
                       type="button"
