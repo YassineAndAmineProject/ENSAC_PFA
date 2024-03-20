@@ -1,1 +1,1 @@
-Next task : Editing the Post.
+Next task : Editing the Profile data.
