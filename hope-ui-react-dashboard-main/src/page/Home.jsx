@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Hero from "../components/Hero";
 import Extra1 from "../components/Extra1";
 import { pageCss } from "./PageCss";
@@ -13,12 +13,13 @@ import { Link } from "react-router-dom";
 import { home_count } from "../data";
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import { UserContext } from "../context/userContext";
 const data = [1, 2, 3, 4, 5, 6, 7];
-
 const Home = () => {
   const classes = pageCss();
-
+  // LOGIQUE BACKEND COMMENCE ICI :
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
   return (
     <>
       <NavBar />
@@ -100,65 +101,69 @@ const Home = () => {
           </Box>
         </Container>
       </Box>
-      <Box className={`${classes.home_count_section}`}>
-        <Container maxWidth="lg">
-          <Typography
-            variant="h3"
-            component="h3"
-            className={`${classes.home_count_title} ${classes.home_carosol_title_padding}`}
-          >
-            Nos réalisations
-          </Typography>
-          <Box className={classes.home_count_box}>
-            <Grid container spacing={2}>
-              {home_count.map((item, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
-                  <Box className={classes.count_icon_box}>
-                    <Box className={classes.count_icon}>{item.icon}</Box>
-                    <Box className={classes.count_content}>
-                      <Typography
-                        variant="h4"
-                        component="h4"
-                        className={classes.count_title}
-                      >
-                        {item.title}
-                      </Typography>
-                      <Typography
-                        variant="h4"
-                        component="p"
-                        className={classes.count_des}
-                      >
-                        {item.des}
-                      </Typography>
-                    </Box>
-                  </Box>
+      {!token && (
+        <>
+          <Box className={`${classes.home_count_section}`}>
+            <Container maxWidth="lg">
+              <Typography
+                variant="h3"
+                component="h3"
+                className={`${classes.home_count_title} ${classes.home_carosol_title_padding}`}
+              >
+                Nos réalisations
+              </Typography>
+              <Box className={classes.home_count_box}>
+                <Grid container spacing={2}>
+                  {home_count.map((item, index) => (
+                    <Grid item xs={12} sm={6} md={3} key={index}>
+                      <Box className={classes.count_icon_box}>
+                        <Box className={classes.count_icon}>{item.icon}</Box>
+                        <Box className={classes.count_content}>
+                          <Typography
+                            variant="h4"
+                            component="h4"
+                            className={classes.count_title}
+                          >
+                            {item.title}
+                          </Typography>
+                          <Typography
+                            variant="h4"
+                            component="p"
+                            className={classes.count_des}
+                          >
+                            {item.des}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
+              </Box>
+            </Container>
           </Box>
-        </Container>
-      </Box>
-      <Box className={classes.home_testimonial_section}>
-        <Container maxWidth="lg">
-          <Box className={classes.home_testimonial}>
-            <Typography
-              variant="h3"
-              component="h3"
-              sx={{ textAlign: "center" }}
-              className={`${classes.slider_title} ${classes.home_carosol_title_padding}`}
-            >
-              Témoignages des abonnés
-            </Typography>
-            <Box className={classes.home_testimonial_box}>
-              <Slider {...testimonial}>
-                {data.map((item) => (
-                  <TextimonialCom key={item} />
-                ))}
-              </Slider>
-            </Box>
+          <Box className={classes.home_testimonial_section}>
+            <Container maxWidth="lg">
+              <Box className={classes.home_testimonial}>
+                <Typography
+                  variant="h3"
+                  component="h3"
+                  sx={{ textAlign: "center" }}
+                  className={`${classes.slider_title} ${classes.home_carosol_title_padding}`}
+                >
+                  Témoignages des abonnés
+                </Typography>
+                <Box className={classes.home_testimonial_box}>
+                  <Slider {...testimonial}>
+                    {data.map((item) => (
+                      <TextimonialCom key={item} />
+                    ))}
+                  </Slider>
+                </Box>
+              </Box>
+            </Container>
           </Box>
-        </Container>
-      </Box>
+        </>
+      )}
       <Box className={classes.home_blog_section}>
         <Container maxWidth="lg">
           <Box className={classes.home_blog}>
@@ -192,7 +197,6 @@ const Home = () => {
       </Box>
 
       <Footer />
-
     </>
   );
 };

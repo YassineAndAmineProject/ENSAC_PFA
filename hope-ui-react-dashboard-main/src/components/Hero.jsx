@@ -1,11 +1,13 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { comCss } from "./ComponentsCss";
 import heroimg from "../image/hero-img.png";
 import { NavLink } from "react-router-dom";
-
+import { UserContext } from "../context/userContext";
 const Hero = () => {
   const classes = comCss();
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
   return (
     <Box className={classes.hero_section}>
       <Container maxWidth="lg">
@@ -22,23 +24,25 @@ const Hero = () => {
               Instructeurs sélectionnés avec soin et cours élaborés par des
               experts, conçus pour les étudiants et entrepreneurs modernes.
             </Typography>
-            <Box className={classes.hero_button}>
-              <Button
-                sx={{ marginRight: "12px" }}
-                ccomponent={NavLink}
-                href="/courses"
-                className={`${classes.button} ${classes.button_3}`}
-              >
-                Parcourir les cours
-              </Button>
-              <Button
-                ccomponent={NavLink}
-                to="/"
-                className={`${classes.button} ${classes.button_1}`}
-              >
-                Êtes-vous un instructeur ?
-              </Button>
-            </Box>
+            {!token && (
+              <Box className={classes.hero_button}>
+                <Button
+                  sx={{ marginRight: "12px" }}
+                  ccomponent={NavLink}
+                  href="/courses"
+                  className={`${classes.button} ${classes.button_3}`}
+                >
+                  Parcourir les cours
+                </Button>
+                <Button
+                  ccomponent={NavLink}
+                  to="/"
+                  className={`${classes.button} ${classes.button_1}`}
+                >
+                  Êtes-vous un instructeur ?
+                </Button>
+              </Box>
+            )}
           </Box>
           <Box className={classes.hero_banner_right}>
             <img

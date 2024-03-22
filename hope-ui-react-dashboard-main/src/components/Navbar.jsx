@@ -7,7 +7,7 @@ import {
   IconButton,
   InputBase,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { comCss } from "./ComponentsCss";
 import logo from "../image/logo.svg";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -17,7 +17,11 @@ import { SearchIcon } from "lucide-react";
 import { Spinner } from "@nextui-org/react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-
+import { UserContext } from "../context/userContext";
+import { Dropdown } from "react-bootstrap";
+import CustomToggle from "./dropdowns";
+import axios from "axios";
+import "../../src/assets/scss/maker.css";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -36,7 +40,29 @@ const Navbar = () => {
     }
   };
   window.addEventListener("scroll", changeBackground);
-
+  // LOGIQUE BACKEND COMMENCE ICI :
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
+  const [fetchedUser, setFetchedUser] = useState(null);
+  useEffect(() => {
+    const fetchConcernedUser = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+        );
+        setFetchedUser(response.data);
+        console.log(fetchedUser);
+      } catch (err) {
+        // un toast pour indiquer que des choses ne marchent pas...
+        toast.error(
+          "Ops! il semble que quelque chose ne marche pas, veillez actualiser cette page !"
+        );
+      }
+    };
+    if (token) {
+      fetchConcernedUser();
+    }
+  }, []);
   return (
     <Box
       className={
@@ -148,23 +174,92 @@ const Navbar = () => {
             </Box>
           </Box>
           {/* button left nav bar */}
-          <Box className={classes.navbar_right}>
-            <Button
-              variant="outlined"
-              href="/auth/sign-up"
-              sx={{ marginRight: "12px" }}
-              className={`${classes.button} ${classes.button_1}`}
-            >
-              S'inscrire
-            </Button>
-            <Button
-              href="auth/sign-in"
-              className={`${classes.button} ${classes.button_2}`}
-              onClick={handleClick}
-            >
-              Se connecter
-            </Button>
-          </Box>
+          {!token ? (
+            <Box className={classes.navbar_right}>
+              <Button
+                variant="outlined"
+                href="/auth/sign-up"
+                sx={{ marginRight: "12px" }}
+                className={`${classes.button} ${classes.button_1}`}
+              >
+                S'inscrire
+              </Button>
+              <Button
+                href="auth/sign-in"
+                className={`${classes.button} ${classes.button_2}`}
+                onClick={handleClick}
+              >
+                Se connecter
+              </Button>
+            </Box>
+          ) : (
+            <Dropdown as="li" className="nav-item">
+              <Dropdown.Toggle
+                as={CustomToggle}
+                variant=" nav-link py-0 d-flex align-items-center"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src={fetchedUser?.profilePicture}
+                  alt="User-Profile"
+                  className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-purple-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-blue-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-green-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <div className="caption ms-3 d-none d-md-block ">
+                  <h6 className="mb-0 caption-title">
+                    {currentUser?.fullName}
+                  </h6>
+                  <p className="mb-0 caption-sub-title">
+                    {currentUser?.entity}
+                  </p>
+                </div>
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                className="dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <Dropdown.Item
+                  href={`/dashboard/app/user-profile/${currentUser?.id}`}
+                >
+                  Profile
+                </Dropdown.Item>
+                <Dropdown.Item href="/dashboard/app/user-profile-edit">
+                  Modifier Profile
+                </Dropdown.Item>
+                <Dropdown.Item href="#">Privacy Setting</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
         </Box>
       </Container>
     </Box>

@@ -21,7 +21,9 @@ import avatars3 from "../../../../assets/images/avatars/avtar_2.png";
 import avatars4 from "../../../../assets/images/avatars/avtar_3.png";
 import avatars5 from "../../../../assets/images/avatars/avtar_4.png";
 import avatars6 from "../../../../assets/images/avatars/avtar_5.png";
-// logo
+
+// Notre image de profile par défaut :
+import defaultProfilePic from "../../../../assets/images/avatars/default-profile-picture1.jpg";
 import Logo from "../../components/logo";
 
 // Redux Selector / Action
@@ -31,6 +33,7 @@ import { useSelector } from "react-redux";
 import * as SettingSelector from "../../../../store/setting/selectors";
 import { UserContext } from "../../../../context/userContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 const Header = memo((props) => {
   const navbarHide = useSelector(SettingSelector.navbar_show); // array
   const headerNavbar = useSelector(SettingSelector.header_navbar);
@@ -53,6 +56,7 @@ const Header = memo((props) => {
   };
   // LOGIQUE BACKEND COMMENCE ICI :
   const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
   const [fetchedUser, setFetchedUser] = useState(null);
   useEffect(() => {
     const fetchConcernedUser = async () => {
@@ -60,13 +64,18 @@ const Header = memo((props) => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
         );
-        setFetchedUser(response.data); 
+        setFetchedUser(response.data);
+        console.log(fetchedUser);
       } catch (err) {
         // un toast pour indiquer que des choses ne marchent pas...
-        console.log(err); 
+        toast.error(
+          "Ops! il semble que quelque chose ne marche pas, veillez actualiser cette page !"
+        );
       }
     };
-    fetchConcernedUser();
+    if (token) {
+      fetchConcernedUser();
+    }
   }, []);
   return (
     <Fragment>
@@ -393,7 +402,11 @@ const Header = memo((props) => {
                   aria-expanded="false"
                 >
                   <img
-                    src={fetchedUser?.profilePicture}
+                    src={
+                      fetchedUser?.profilePicture
+                        ? fetchedUser?.profilePicture
+                        : defaultProfilePic
+                    }
                     alt="User-Profile"
                     className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
                   />
@@ -435,7 +448,9 @@ const Header = memo((props) => {
                   className="dropdown-menu-end"
                   aria-labelledby="navbarDropdown"
                 >
-                  <Dropdown.Item href="/dashboard/app/user-profile">
+                  <Dropdown.Item
+                    href={`/dashboard/app/user-profile/${currentUser?.id}`}
+                  >
                     Profile
                   </Dropdown.Item>
                   <Dropdown.Item href="/dashboard/app/user-profile-edit">

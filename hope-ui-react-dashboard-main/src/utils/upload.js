@@ -3,7 +3,6 @@
 //     api_key: '924827724625761',
 //     api_secret: 'HSj_TDnOaOz-YgwPisCPE_bR1ck'
 //   });
-
 import axios from "axios";
 export const upload = async (file) => {
   const data = new FormData();

@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 // img
 import imgsuccess from "../../../assets/images/pages/img-success.png";
 import { UserContext } from "../../../context/userContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { upload } from "../../../utils/upload";
 const UserAccountSetting = () => {
   const [show, AccountShow] = useState("A");
   // LOGIQUE BACKEND COMMENCE ICI :
@@ -16,6 +19,67 @@ const UserAccountSetting = () => {
       navigate("/auth/sign-in");
     }
   }, []);
+  const [error, setError] = useState("");
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
+  const [loadingPreview, setLoadingPreview] = useState(true);
+  // les data :
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  useEffect(() => {
+    const fetchConcernedUser = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+        );
+        setFirstName(response.data.firstName);
+        setLastName(response.data.lastName);
+        setEmail(response.data.email);
+      } catch (err) {
+        // un toast pour indiquer que des choses ne marchent pas...
+        toast.error(
+          "Ops! il semble que quelque chose ne marche pas, veillez actualiser cette page !"
+        );
+      }
+    };
+    if (token) {
+      fetchConcernedUser();
+    }
+  }, []);
+  const sendPic = async (file) => {
+    setLoadingPreview(true);
+    const urlOb = await upload(file);
+    setUrl(urlOb);
+    setLoadingPreview(false);
+  };
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const recups = {
+        email,
+        firstName,
+        lastName,
+        currentPassword,
+        newPassword: password,
+        confirmNewPassword: password2,
+        newProfilePicture: url,
+      };
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/students/edit`,
+        recups,
+        { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
+      ); 
+    } catch (err) {
+      toast.error(
+        "La mise à jour des données a echoué, vérifiez la console : "
+      );
+      console.log(err);
+    }
+  };
   return (
     <>
       <div>
@@ -28,7 +92,11 @@ const UserAccountSetting = () => {
                 </div>
               </Card.Header>
               <Card.Body>
-                <Form id="form-wizard1" className="text-center mt-3">
+                <Form
+                  id="form-wizard1"
+                  className="text-center mt-3"
+                  onSubmit={handleUpdate}
+                >
                   <ul id="top-tab-list" className="p-0 row list-inline">
                     <li
                       className={` ${show === "Image" ? " active done" : ""} ${
@@ -37,36 +105,6 @@ const UserAccountSetting = () => {
                         show === "A" ? "active" : ""
                       } col-lg-3 col-md-6 text-start mb-2 active`}
                       id="account"
-                    >
-                      <Link to="#">
-                        <div className="iq-icon me-3">
-                          <svg
-                            className="svg-icon"
-                            xmlns="http://www.w3.org/2000/svg"
-                            height="20"
-                            width="20"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
-                            />
-                          </svg>
-                        </div>
-                        <span>Compte</span>
-                      </Link>
-                    </li>
-                    <li
-                      id="personal"
-                      className={`${
-                        show === "Personal" ? " active done" : ""
-                      } ${show === "Image" ? " active done" : ""} ${
-                        show === "Account" ? "active " : ""
-                      } col-lg-3 col-md-6 mb-2 text-start`}
                     >
                       <Link to="#">
                         <div className="iq-icon me-3">
@@ -87,6 +125,36 @@ const UserAccountSetting = () => {
                           </svg>
                         </div>
                         <span>Personnel</span>
+                      </Link>
+                    </li>
+                    <li
+                      id="personal"
+                      className={`${
+                        show === "Personal" ? " active done" : ""
+                      } ${show === "Image" ? " active done" : ""} ${
+                        show === "Account" ? "active " : ""
+                      } col-lg-3 col-md-6 mb-2 text-start`}
+                    >
+                      <Link to="#">
+                        <div className="iq-icon me-3">
+                          <svg
+                            className="svg-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="20"
+                            width="20"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+                            />
+                          </svg>
+                        </div>
+                        <span>Sécurité</span>
                       </Link>
                     </li>
                     <li
@@ -170,42 +238,38 @@ const UserAccountSetting = () => {
                               type="email"
                               className="form-control"
                               name="email"
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                              }}
+                              value={email}
                             />
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label className="form-label">
-                              Nom d'utilisateur : *
-                            </label>
+                            <label className="form-label">Prenom : *</label>
                             <input
                               type="text"
                               className="form-control"
-                              name="uname"
+                              name="firstName"
+                              onChange={(e) => {
+                                setFirstName(e.target.value);
+                              }}
+                              value={firstName}
                             />
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label className="form-label">
-                              Mot de passe : *
-                            </label>
+                            <label className="form-label">Nom : *</label>
                             <input
-                              type="password"
+                              type="text"
                               className="form-control"
-                              name="pwd"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="form-label">
-                              Confirmer le mot de passe : *
-                            </label>
-                            <input
-                              type="password"
-                              className="form-control"
-                              name="cpwd"
+                              name="lastName"
+                              onChange={(e) => {
+                                setLastName(e.target.value);
+                              }}
+                              value={lastName}
                             />
                           </div>
                         </div>
@@ -236,45 +300,31 @@ const UserAccountSetting = () => {
                       <div className="row">
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label className="form-label">Prénom : *</label>
+                            <label className="form-label">
+                              Nouveau mot de passe :
+                            </label>
                             <input
-                              type="text"
+                              type="password"
                               className="form-control"
-                              name="fname"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="form-label">Nom : *</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="lname"
+                              name="password"
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                              }}
                             />
                           </div>
                         </div>
                         <div className="col-md-6">
                           <div className="form-group">
                             <label className="form-label">
-                              Numéro de contact : *
+                              Confirmer le mot de passe :
                             </label>
                             <input
-                              type="text"
+                              type="password"
                               className="form-control"
-                              name="phno"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="form-label">
-                              Numéro de contact alternatif : *
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="phno_2"
+                              name="password2"
+                              onChange={(e) => {
+                                setPassword2(e.target.value);
+                              }}
                             />
                           </div>
                         </div>
@@ -320,14 +370,41 @@ const UserAccountSetting = () => {
                           className="form-control"
                           name="pic"
                           accept="image/*"
+                          onChange={(e) => {
+                            setImage(e.target.files[0]);
+                            sendPic(e.target.files[0]);
+                          }}
                         />
+                      </div>
+                      <hr />
+                      <div className="col-md-6">
+                        <div className="form-group">
+                          <label
+                            className="form-label"
+                            style={{
+                              color: "red",
+                              fontWeight: "bold",
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            Mot de passe actuel{" "}
+                            {`(obligatoire pour valider les modifications)`}:
+                          </label>
+                          <input
+                            type="password"
+                            className="form-control"
+                            name="currentPassword"
+                            onChange={(e) => {
+                              setCurrentPassword(e.target.value);
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                     <button
-                      type="button"
+                      type="submit"
                       name="next"
                       className="btn btn-primary next action-button float-end"
-                      value="Submit"
                       onClick={() => AccountShow("Image")}
                     >
                       Soumettre

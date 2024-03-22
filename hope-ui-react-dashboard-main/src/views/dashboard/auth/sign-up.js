@@ -308,7 +308,9 @@ const SignUp = () => {
                             />
                           </div>
                         ) : (
-                          "Loading preview..."
+                          <h5 style={{ fontWeight: "bold" }}>
+                            Loading preview....
+                          </h5>
                         ))}
                       <input
                         style={{ visibility: "hidden" }}

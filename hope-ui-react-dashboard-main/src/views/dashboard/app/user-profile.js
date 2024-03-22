@@ -34,17 +34,58 @@ import pages2 from "../../../assets/images/pages/02-page.png";
 
 import ShareOffcanvas from "../../../components/partials/components/shareoffcanvas";
 import { UserContext } from "../../../context/userContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import loader from "../../../image/loader.gif";
+import defaultProfilePic from "../../../assets/images/avatars/default-profile-picture1.jpg";
 const UserProfile = () => {
   const [toggler, setToggler] = useState();
   // LOGIQUE BACKEND COMMENCE ICI ::
   const navigate = useNavigate();
   const { currentUser } = useContext(UserContext);
+  const [fetchedUser, setFetchedUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const token = currentUser?.token;
   useEffect(() => {
     if (!token) {
       navigate("/auth/sign-in");
     }
   }, []);
+  useEffect(() => {
+    const fetchConcernedUser = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+        );
+        setFetchedUser(response.data);
+        console.log(fetchedUser);
+      } catch (err) {
+        // un toast pour indiquer que des choses ne marchent pas...
+        toast.error(
+          "Ops! il semble que quelque chose ne marche pas, veillez actualiser cette page !"
+        );
+      }
+      setLoading(false);
+    };
+    if (token) {
+      fetchConcernedUser();
+    }
+  }, []);
+  if (loading) {
+    return (
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img src={loader} />
+      </div>
+    );
+  }
   return (
     <Fragment>
       <FsLightbox
@@ -71,7 +112,11 @@ const UserProfile = () => {
                     <div className="profile-img position-relative me-3 mb-3 mb-lg-0 profile-logo profile-logo1">
                       <Image
                         className="theme-color-default-img  img-fluid rounded-pill avatar-100"
-                        src={avatars11}
+                        src={
+                          fetchedUser?.profilePicture
+                            ? fetchedUser?.profilePicture
+                            : defaultProfilePic
+                        }
                         alt="profile-pic"
                       />
                       <Image
@@ -96,13 +141,15 @@ const UserProfile = () => {
                       />
                       <Image
                         className="theme-color-pink-img img-fluid rounded-pill avatar-100"
-                        src={avatars44}
+                        src={"hh"}
                         alt="profile-pic"
                       />
                     </div>
                     <div className="d-flex flex-wrap align-items-center mb-3 mb-sm-0">
-                      <h4 className="me-2 h4">Austin Robertson</h4>
-                      <span> - Web Developer </span>
+                      <h4 className="me-2 h4">
+                        {fetchedUser?.firstName + " " + fetchedUser?.lastName}
+                      </h4>
+                      <span> - {currentUser?.entity} </span>
                     </div>
                   </div>
                   <Nav
@@ -561,13 +608,22 @@ const UserProfile = () => {
                       <div className="user-profile">
                         <Image
                           className="theme-color-default-img  rounded-pill avatar-130 img-fluid"
-                          src={avatars11}
+                          src={
+                            fetchedUser?.profilePicture
+                              ? fetchedUser?.profilePicture
+                              : defaultProfilePic
+                          }
                           alt="profile-pic"
                         />
                       </div>
                       <div className="mt-3">
-                        <h3 className="d-inline-block">Austin Robertson</h3>
-                        <p className="d-inline-block pl-3"> - Web developer</p>
+                        <h3 className="d-inline-block">
+                          {fetchedUser?.firstName + " " + fetchedUser?.lastName}
+                        </h3>
+                        <p className="d-inline-block pl-3">
+                          {" "}
+                          - {currentUser?.entity}
+                        </p>
                         <p className="mb-0">
                           Lorem Ipsum is simply dummy text of the printing and
                           typesetting industry. Lorem Ipsum has
@@ -610,12 +666,12 @@ const UserProfile = () => {
                           className="m-2"
                         />
 
-                        <h6>Email</h6>
+                        <h6>Email académique</h6>
                         <Form.Control
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue="example@gmail.com"
+                          value={`${fetchedUser?.firstName}${fetchedUser?.lastName}@usmba.ac.ma`}
                           className="m-2"
                         />
 

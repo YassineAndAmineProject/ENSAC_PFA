@@ -128,3 +128,96 @@ exports.getStudent = async (req, res, next) => {
     return next(new HttpError(error, 500));
   }
 };
+exports.editStudent = async (req, res, next) => {
+  const id = req.user.id;
+  const {
+    email,
+    firstName,
+    lastName,
+    currentPassword,
+    newPassword,
+    confirmNewPassword,
+    newProfilePicture,
+  } = req.body;
+  console.log(req.body);
+  if (!firstName || !lastName || !email || !currentPassword) {
+    return next(new HttpError("Données nécéssaires qui manquent !", 400));
+  }
+  try {
+    const lowerMail = email.toLowerCase();
+    const prevStudent = await Student.findOne({ email: lowerMail });
+    if (prevStudent && prevStudent._id != id) {
+      return next(
+        new HttpError("Cet email est déja utilisé par un autre utilisateur : ")
+      );
+    }
+    const student = await Student.findById(id);
+    // additional test ... (meaningless)
+    const match = await bcrypt.compare(currentPassword, student.password);
+    if (!match) {
+      return next(new HttpError("Mot de passe actuel est incorrecte !", 400));
+    }
+    let newInfo;
+    if (newPassword && confirmNewPassword) {
+      if (newPassword.trim().length < 12) {
+        return next(
+          new HttpError(
+            "Votre nouveau mot de passe ne satisfait pas la condition de sécurité, un mot de passe doit avoir au moins 12 caractéres"
+          )
+        );
+      }
+      if (newPassword != confirmNewPassword) {
+        return next(
+          new HttpError(
+            "Le nouveau mot de passe et celui de confirmation ne sont pas identiques..",
+            400
+          )
+        );
+      }
+      const salt = await bcrypt.genSalt(10);
+      const hashedNewPass = await bcrypt.hash(newPassword, salt);
+      if (newProfilePicture) {
+        newInfo = await Student.findByIdAndUpdate(
+          id,
+          {
+            firstName,
+            lastName,
+            password: hashedNewPass,
+            email: lowerMail,
+            profilePicture: newProfilePicture,
+          },
+          { new: true }
+        );
+      } else {
+        newInfo = await Student.findByIdAndUpdate(
+          id,
+          { firstName, lastName, password: hashedNewPass, email: lowerMail },
+          { new: true }
+        );
+      }
+    } else {
+      if (newProfilePicture) {
+        newInfo = await Student.findByIdAndUpdate(
+          id,
+          {
+            firstName,
+            lastName,
+            email: lowerMail,
+            profilePicture: newProfilePicture,
+          },
+          { new: true }
+        );
+      } else {
+        newInfo = await Student.findByIdAndUpdate(
+          id,
+          { firstName, lastName, email: lowerMail },
+          { new: true }
+        );
+      }
+    }
+    res.status(201).json(newInfo);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};
+
