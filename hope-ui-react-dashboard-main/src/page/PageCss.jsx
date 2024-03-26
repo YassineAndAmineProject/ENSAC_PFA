@@ -17,6 +17,12 @@ const theme = createTheme({
 });
 
 export const pageCss = makeStyles(() => ({
+  uni_section: {
+    padding: "80px 0px 50px 0px !important",
+    [theme.breakpoints.down("md")]: {
+      padding: "50px 0px 20px 0px !important",
+    },
+  },
   //Home Page
   home_course_section: {
     background: Theme.colors.bg1,

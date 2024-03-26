@@ -26,6 +26,10 @@ const profSchema = new Schema(
     socialAccounts: {
       type: [String],
       default: [],
+      // {
+      //   name: { type: String },
+      //   url: { type: String },
+      // }
     },
     worksFor: {
       type: [String], // linked to Academy

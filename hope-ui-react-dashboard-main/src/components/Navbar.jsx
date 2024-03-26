@@ -22,6 +22,7 @@ import { Dropdown } from "react-bootstrap";
 import CustomToggle from "./dropdowns";
 import axios from "axios";
 import "../../src/assets/scss/maker.css";
+import { toast } from "react-toastify";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -55,7 +56,7 @@ const Navbar = () => {
       } catch (err) {
         // un toast pour indiquer que des choses ne marchent pas...
         toast.error(
-          "Ops! il semble que quelque chose ne marche pas, veillez actualiser cette page !"
+          "Ops! il semble que quelque chose ne marche pas, veuillez actualiser cette page !"
         );
       }
     };
@@ -98,6 +99,9 @@ const Navbar = () => {
                 </Link>
                 <Link to="/contact" className={`${classes.nav_link}`}>
                   Contact
+                </Link>
+                <Link to="/Academies" className={`${classes.nav_link}`}>
+                  Academies
                 </Link>
               </Box>
 

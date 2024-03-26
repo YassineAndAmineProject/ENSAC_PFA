@@ -2,6 +2,7 @@ const Student = require("../models/AppSchemas/Student");
 const HttpError = require("../models/HttpError/ErrorModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
 exports.registerStudent = async (req, res, next) => {
   try {
     console.log("Corps de la requette : ");
@@ -220,4 +221,3 @@ exports.editStudent = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
-

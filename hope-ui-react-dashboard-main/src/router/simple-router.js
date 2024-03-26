@@ -13,6 +13,7 @@ import Error500 from "../views/dashboard/errors/error500";
 import Maintenance from "../views/dashboard/errors/maintenance";
 import About from "../page/About";
 import UserProvider from "../context/userContext";
+import SignInFormProf from "../views/dashboard/auth/sign-up-prof";
 // const SimpleRouter = () => {
 //     return (
 //             <>
@@ -40,6 +41,14 @@ export const SimpleRouter = [
     element: (
       <UserProvider>
         <SignIn />
+      </UserProvider>
+    ),
+  },
+  {
+    path: "/auth/sign-in-prof",
+    element: (
+      <UserProvider>
+        <SignInFormProf />
       </UserProvider>
     ),
   },

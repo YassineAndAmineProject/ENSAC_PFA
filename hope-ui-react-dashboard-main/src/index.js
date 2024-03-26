@@ -29,6 +29,7 @@ import ScrollToTops from "./components/ScrollToTops";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProvider from "./context/userContext";
+import AcademiesBoardView from "./components/AcademiesView";
 const router = createBrowserRouter(
   [
     {
@@ -76,6 +77,14 @@ const router = createBrowserRouter(
       element: (
         <UserProvider>
           <Contact />
+        </UserProvider>
+      ),
+    },
+    {
+      path: "/Academies",
+      element: (
+        <UserProvider>
+          <AcademiesBoardView />
         </UserProvider>
       ),
     },

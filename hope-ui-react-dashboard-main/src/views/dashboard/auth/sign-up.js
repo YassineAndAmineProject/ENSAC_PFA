@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Row, Col, Image, Form, Button, ListGroup } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { FaCheck } from "react-icons/fa";
+import { Row, Col, Image, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
+import CircularProgress from "@mui/material/CircularProgress";
 
 import Card from "../../../components/Card";
 
@@ -9,13 +10,20 @@ import Card from "../../../components/Card";
 
 import auth5 from "../../../assets/images/auth/laern_6.jpeg";
 //import auth5 from "../../../assets/images/auth/learning.avif";
-import { MoveLeftIcon } from "lucide-react";
+import { ImageIcon, MoveLeftIcon, Upload } from "lucide-react";
 //import toast from "react-hot-toast";
 import { toast } from "react-toastify";
 import { upload } from "../../../utils/upload";
-import { FaFileUpload } from "react-icons/fa";
-import { AiFillCloseCircle } from "react-icons/ai";
+
 import axios from "axios";
+import Alert from "../../../components/popupAlert";
+
+import Accordion from "@mui/material/Accordion";
+
+import AccordionSummary from "@mui/material/AccordionSummary";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 const SignUp = () => {
   const [loadingPreview, setLoadingPreview] = useState(true);
   const [url, setUrl] = useState("");
@@ -29,10 +37,12 @@ const SignUp = () => {
     password: "",
     password2: "",
   });
+
   const [error, setError] = useState("");
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const sendPic = async () => {
     setLoadingPreview(true);
     const urlOb = await upload(profilePicture);
@@ -40,19 +50,24 @@ const SignUp = () => {
     setForm({ ...form, profilePicture: urlOb });
     setLoadingPreview(false);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(url);
+
     try {
       console.log("Data sent within the request is : ");
       console.log(form);
+
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_URL}/students/register`,
         form
       );
+
       console.log("Resp data : ");
       console.log(response.data);
       toast.success("Registered Successfully");
+
       setForm({
         firstname: "",
         lastname: "",
@@ -60,6 +75,7 @@ const SignUp = () => {
         password: "",
         password2: "",
       });
+
       setAvatarChanged(false);
       setDispPic(false);
       setError("");
@@ -109,6 +125,7 @@ const SignUp = () => {
                             marginBottom: "1rem",
                           }}
                         >
+                          <Alert Alertcontent={error} />
                           {error}
                         </p>
                       )}
@@ -182,104 +199,94 @@ const SignUp = () => {
                             />
                           </Form.Group>
                         </Col>
-                        {/*<Col
-                          lg="12"
-                          className="d-flex justify-content-center align-items-center flex-column w-100"
-                        >
-                         <h5 className="text-center mb-2">
-                            S'inscrire en tant que :
-                          </h5>
-
-                          <div className="d-flex justify-content-between align-items-center bg-primary   ">
-                       
-                            {/*<Form.Check className="mb-3 form-check mr-2 col-6 text-center">
-                              <Form.Check.Input
-                                type="checkbox"
-                                id="customCheck1"
-                                value={"Professeur"}
-                                onChange={(e) =>
-                                  toast.info(`Vous êtes un  ${e.target.value}`)
-                                }
-                              />
-                              <Form.Check.Label htmlFor="customCheck1">
-                                Professeur
-                              </Form.Check.Label>
-                            </Form.Check>
-
-                            <Form.Check className="mb-3 form-check col-6 text-center ">
-                              <Form.Check.Input
-                                type="checkbox"
-                                id="customCheck1"
-                                value={"Etudiant"}
-                                onChange={(e) =>
-                                  toast.info(`Vous êtes un  ${e.target.value}`)
-                                }
-                              />
-                              <Form.Check.Label htmlFor="customCheck1">
-                                Etudiant
-                              </Form.Check.Label>
-                            </Form.Check>
-                          </div>
-                        </Col>*/}
                       </Row>
                       <div
                         style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          position: "relative",
+                          marginBottom: "10px",
                         }}
                       >
-                        Select picture :
-                        {
-                          <label
-                            onClick={() => {
-                              setAvatarChanged(true);
-                            }}
-                            htmlFor="picture"
-                            style={{
-                              fontSize: "1.3rem",
-                              width: "3rem",
-                              height: "3rem",
-                              display: "grid",
-                              placeItems: "center",
-                              borderRadius: "50%",
-                              cursor: "pointer",
-                              background: "#5356FF",
-                              color: "white",
-                              position: "absolute",
-                              right: "0",
-                            }}
+                        <Accordion>
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
                           >
-                            <FaFileUpload />
-                          </label>
-                        }
-                        {avatarChanged && (
+                            Photo de profil (Optionnelle)
+                          </AccordionSummary>
                           <div
-                            onClick={() => {
-                              setDispPic(true);
-                              sendPic();
-                            }}
                             style={{
-                              fontSize: "1.3rem",
-                              width: "3rem",
-                              height: "3rem",
-                              display: "grid",
-                              placeItems: "center",
-                              borderRadius: "50%",
-                              cursor: "pointer",
-                              background: "#5356FF",
-                              color: "white",
-                              position: "absolute",
-                              border: "none",
-                              right: "0",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              position: "relative",
                             }}
                           >
-                            <FaCheck />
+                            <div
+                              style={{
+                                display: "flex",
+                                flex: 1,
+                                height: "10rem",
+                                borderRadius: "5px",
+
+                                alignItems: "center",
+                                justifyContent: "center",
+                                position: "relative",
+                                cursor: "pointer",
+                                border: " 0.5px dashed gray",
+                                margin: "5px",
+                              }}
+                            >
+                              <input
+                                style={{
+                                  opacity: 0,
+                                  position: "absolute",
+                                  top: "0",
+                                  left: "0",
+                                  bottom: "0",
+                                  right: "0",
+                                  width: "100%",
+                                  height: "100%",
+                                  cursor: "pointer",
+                                }}
+                                name="picture"
+                                id="picture"
+                                type="file"
+                                onChange={(e) => {
+                                  setProfilePicture(e.target.files[0]);
+                                  sendPic();
+                                }}
+                              />
+                              <Upload size={34} />
+                            </div>
+                            <div
+                              id="profile-preview"
+                              style={{
+                                width: "10rem",
+                                height: "10rem",
+                                borderRadius: "5px",
+                                display: "flex",
+                                flex: 1,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                margin: "5px",
+                                overflow: "hidden",
+                              }}
+                            >
+                              {loadingPreview ? (
+                                <CircularProgress />
+                              ) : (
+                                <img
+                                  style={{ width: "100%", objectFit: "cover" }}
+                                  src={url}
+                                  alt=""
+                                />
+                              )}
+                            </div>
                           </div>
-                        )}
+                        </Accordion>
                       </div>
-                      {dispPic &&
+
+                      {/* {dispPic &&
                         (!loadingPreview ? (
                           <div
                             id="profile-preview"
@@ -308,9 +315,10 @@ const SignUp = () => {
                             />
                           </div>
                         ) : (
-                          <h5 style={{ fontWeight: "bold" }}>
-                            Loading preview....
-                          </h5>
+                          <CircularProgress />
+                          // <h5 style={{ fontWeight: "bold" }}>
+                          //   Loading preview....
+                          // </h5>
                         ))}
                       <input
                         style={{ visibility: "hidden" }}
@@ -320,7 +328,7 @@ const SignUp = () => {
                         onChange={(e) => {
                           setProfilePicture(e.target.files[0]);
                         }}
-                      />
+                      /> */}
                       <div className="d-grid justify-content-center">
                         <Button
                           className="btn btn-primary"
@@ -330,27 +338,7 @@ const SignUp = () => {
                           S'inscrire
                         </Button>
                       </div>
-                      {/*<p className="text-center my-3">
-                        or sign in with other accounts?
-                      </p>
-                      <div className="d-flex justify-content-center">
-                        <ListGroup
-                          as="ul"
-                          className="list-group-horizontal list-group-flush"
-                        >
-                          <ListGroup.Item
-                            as="li"
-                            className="list-group-item border-0 pb-0 col-12 bg-black"
-                          >
-                            <Link to="#">
-                              <Image src={google} alt="gm" />
-                            </Link>
-                          </ListGroup.Item>
-                         
-                         
-                        </ListGroup>
-                      </div>
-                    */}
+
                       <p className="mt-3 text-center">
                         J'ai déjà un compte {" ? "}
                         <Link to="/auth/sign-in" className="text-underline">
