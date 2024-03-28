@@ -20,6 +20,7 @@ import SignUp from "./SignUp";
 import { UserContext } from "../context/userContext";
 import { Dropdown } from "react-bootstrap";
 import CustomToggle from "./dropdowns";
+import defaultProfilePic from "../../src/assets/images/avatars/default-profile-picture1.jpg"; 
 import axios from "axios";
 import "../../src/assets/scss/maker.css";
 const Navbar = () => {
@@ -204,7 +205,11 @@ const Navbar = () => {
                 aria-expanded="false"
               >
                 <img
-                  src={fetchedUser?.profilePicture}
+                  src={
+                    fetchedUser?.profilePicture
+                      ? fetchedUser.profilePicture
+                      : defaultProfilePic
+                  }
                   alt="User-Profile"
                   className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
                 />
