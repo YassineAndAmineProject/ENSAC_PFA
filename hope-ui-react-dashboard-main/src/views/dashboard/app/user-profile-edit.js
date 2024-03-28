@@ -72,7 +72,7 @@ const UserAccountSetting = () => {
         `${process.env.REACT_APP_BASE_URL}/students/edit`,
         recups,
         { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
-      ); 
+      );
     } catch (err) {
       toast.error(
         "La mise à jour des données a echoué, vérifiez la console : "

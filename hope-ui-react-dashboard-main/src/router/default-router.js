@@ -49,6 +49,10 @@ import UserAccountSetting from "../views/dashboard/app/user-profile-edit";
 import FormationList from "../views/dashboard/app/formation-list";
 import UserProvider from "../context/userContext";
 import Logout from "../components/partials/dashboard/FunctionnalityComponent/Logout";
+import AddAcademy from "../views/dashboard/app/add-academy";
+import AddNewTraining from "../views/dashboard/app/add-new-training";
+import TrainingsList from "../views/dashboard/app/trainings-list";
+import AddCourseToTraining from "../views/dashboard/app/add-course";
 // petite remarque : ouvre le composant Default, tu trouveras un Outlet dans lequel les "children" varient ainsi que tu trouveras l'élément Header qui est fixe...
 export const DefaultRouter = [
   {
@@ -106,6 +110,22 @@ export const DefaultRouter = [
       {
         path: "dashboard/app/formation-list",
         element: <FormationList />,
+      },
+      {
+        path: "/dashboard/app/addAcademy",
+        element: <AddAcademy />,
+      },
+      {
+        path: "/dashboard/app/add-new-training",
+        element: <AddNewTraining />,
+      },
+      {
+        path: "/dashboard/app/list-training",
+        element: <TrainingsList />,
+      },
+      {
+        path: "/dashboard/app/add-new-course-to/:id",
+        element: <AddCourseToTraining />,
       },
       {
         path: "dashboard/admin/admin",

@@ -81,7 +81,6 @@ const VerticalNav = memo((props) => {
             <span className="item-name">Tableau de bord</span>
           </Link>
         </li>
-
         <li className="nav-item static-item">
           <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
             <span className="default-icon">Pages</span>
@@ -643,14 +642,12 @@ const VerticalNav = memo((props) => {
             </ul>
           </Accordion.Collapse>
         </Accordion.Item>
-
         <li className="nav-item static-item">
           <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
             <span className="default-icon">Académies</span>
             <span className="mini-icon">-</span>
           </Link>
         </li>
-
         <ul className="sub-nav">
           <li className="nav-item">
             <Link
@@ -676,8 +673,147 @@ const VerticalNav = memo((props) => {
               <span className="item-name">Académies</span>
             </Link>
           </li>
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "/dashboard/app/addAcademy"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/addAcademy"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Créer Académie</span>
+            </Link>
+          </li>
+        </ul>
+        <li className="nav-item static-item">
+          <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
+            <span className="default-icon">Formation</span>
+            <span className="mini-icon">-</span>
+          </Link>
+        </li>
+        <ul className="sub-nav">
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "/dashboard/app/add-new-training"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/add-new-training"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Ajouter formation</span>
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "/dashboard/app/list-training"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/list-training"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Liste des formations</span>
+            </Link>
+          </li>
         </ul>
 
+        {/* PARTIES DES COURS */}
+        {/* <li className="nav-item static-item">
+          <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
+            <span className="default-icon">Cours</span>
+            <span className="mini-icon">-</span>
+          </Link>
+        </li>
+        <ul className="sub-nav">
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "/dashboard/app/add-new-course-to/trainingId"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/add-new-course-to/trainingId"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Ajouter cours</span>
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "#"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="#"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Liste des cours</span>
+            </Link>
+          </li>
+        </ul> */}
         <Accordion.Item
           as="li"
           eventKey="utilities-error"

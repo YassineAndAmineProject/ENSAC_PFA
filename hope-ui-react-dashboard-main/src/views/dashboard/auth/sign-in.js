@@ -30,7 +30,7 @@ const SignIn = () => {
       const user = await result.data;
       console.log(user);
       setCurrentUser(user);
-      navigate("/dashboard"); 
+      navigate("/dashboard");
     } catch (err) {
       toast.error("Echec de connexion ");
       console.log(err.response.data);

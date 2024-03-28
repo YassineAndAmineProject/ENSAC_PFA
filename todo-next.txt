@@ -1,0 +1,32 @@
+-------------------------ETUDIANTS------------------------
+
+1. Ajouter une page de Sign up pour prof  ❎👍
+
+
+2. Ajouter une page pour creation de academies (admin)  ❎👍
+(name
+picture
+description
+domain)
+
+
+
+3. Ajouter une page pour creation de formation: ❎👍
+name V
+category V
+picture V
+video V
+difficulty V
+
+ { Fait }
+
+4. Ajouter une page pour creation de cours & chapitres ❎👍
+{fait}
+
+-------------------------ETUDIANTS------------------------
+1. Ajouter un gidLayout pour lister les academies (session normale) ❎🤞
+{fait mais reste à bien ajuster }
+2. Ajouter une page pour ajout des adresse social-medias (dashboard ) ❌😒
+{pas urgent}
+3. Ajouter une page descriptive de chaque academies (session normale) ❌
+{prochainement}
