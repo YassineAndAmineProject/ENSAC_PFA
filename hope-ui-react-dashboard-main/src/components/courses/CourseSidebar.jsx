@@ -1,5 +1,5 @@
 import { Box, Button, IconButton, Modal, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { comCss } from "../ComponentsCss";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
@@ -9,12 +9,13 @@ import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import courseimg from "../../image/course-react.jpg";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Iframe } from "../CommonComponents";
 import ModalBtn from "../popup";
 import { toast } from "react-toastify";
 import { Heart, MoveRight, MoveRightIcon } from "lucide-react";
-
+import { UserContext } from "../../context/userContext";
+import "./spec.css";
 const CourseSidebar = () => {
   const classes = comCss();
   const [open, setOpen] = React.useState(false);
@@ -36,6 +37,9 @@ const CourseSidebar = () => {
       error: "Une erreur est survenue🤯",
     });
   };
+  // LOGIQUE BACKEND COMMENCE ICI  :
+  const { currentUser } = useContext(UserContext);
+  const token = currentUser?.token;
   return (
     <Box className={classes.course_sidebar}>
       <Box className={classes.course_sidebar_box}>
@@ -83,30 +87,38 @@ const CourseSidebar = () => {
           >
             Enroll Course
   </Button>*/}
-          <ModalBtn
-            sx={{ marginBottom: "10px !important" }}
-            className={`${classes.button} ${classes.course_sidebar_button_1}`}
-            label="S'enroller"
-            title="Enrollement pour ce cours"
-            description="Si vous continez, votre demande sera notifée à l'instructeur pour validation "
-          >
-            <Button
-              onClick={handleEnroll}
-              component={NavLink}
-              className={`Button_hover ${classes.button} ${classes.course_sidebar_button_green}`}
+          {token ? (
+            <ModalBtn
+              sx={{ marginBottom: "10px !important" }}
+              className={`${classes.button} ${classes.course_sidebar_button_1}`}
+              label="S'enroller"
+              title="Enrollement pour ce cours"
+              description="Si vous continez, votre demande sera notifée à l'instructeur pour validation "
             >
-              J'accepte
-              <MoveRight id="icon" />
+              <Button
+                onClick={handleEnroll}
+                component={NavLink}
+                className={`Button_hover ${classes.button} ${classes.course_sidebar_button_green}`}
+              >
+                J'accepte
+                <MoveRight id="icon" />
+              </Button>
+            </ModalBtn>
+          ) : (
+            <Link to="/auth/sign-in" className={"button-27"}>
+              Connectez vous pour bénéficier
+            </Link>
+          )}
+          {token && (
+            <Button
+              component={NavLink}
+              onClick={handleFavorite}
+              className={`${classes.button} ${classes.course_sidebar_button_2}`}
+            >
+              <Heart size={18} /> {"  "}
+              Ajouter aux favoris
             </Button>
-          </ModalBtn>
-          <Button
-            component={NavLink}
-            onClick={handleFavorite}
-            className={`${classes.button} ${classes.course_sidebar_button_2}`}
-          >
-            <Heart size={18} /> {"  "}
-            Ajouter aux favoris
-          </Button>
+          )}
         </Box>
       </Box>
       <Box className={classes.course_sidebar_box}>

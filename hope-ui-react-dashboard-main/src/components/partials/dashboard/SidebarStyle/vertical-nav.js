@@ -5,7 +5,7 @@ import {
   useAccordionButton,
   AccordionContext,
 } from "react-bootstrap";
-
+import { UserContext } from "../../../../context/userContext";
 import { Layers3 } from "lucide-react";
 function CustomToggle({ children, eventKey, onClick }) {
   const { activeEventKey } = useContext(AccordionContext);
@@ -15,7 +15,6 @@ function CustomToggle({ children, eventKey, onClick }) {
   );
 
   const isCurrentEventKey = activeEventKey === eventKey;
-
   return (
     <Link
       to="#"
@@ -36,6 +35,9 @@ const VerticalNav = memo((props) => {
   const [active, setActive] = useState("");
   //location
   let location = useLocation();
+  // logique backendd :
+  const { currentUser } = useContext(UserContext);
+  const entity = currentUser?.entity;
   return (
     <Fragment>
       <Accordion as="ul" className="navbar-nav iq-main-menu">
@@ -668,35 +670,36 @@ const VerticalNav = memo((props) => {
                   <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
                 </g>
               </svg>
-
               <i className="sidenav-mini-icon"> E </i>
               <span className="item-name">Académies</span>
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              className={`${
-                location.pathname === "/dashboard/app/addAcademy"
-                  ? "active"
-                  : ""
-              } nav-link`}
-              to="/dashboard/app/addAcademy"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+          {entity == "Professor" && currentUser?.isResp && (
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/addAcademy"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/addAcademy"
               >
-                <g>
-                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                </g>
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
 
-              <i className="sidenav-mini-icon"> E </i>
-              <span className="item-name">Créer Académie</span>
-            </Link>
-          </li>
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Créer Académie</span>
+              </Link>
+            </li>
+          )}
         </ul>
         <li className="nav-item static-item">
           <Link className="nav-link static-item disabled" to="#" tabIndex="-1">
@@ -704,57 +707,58 @@ const VerticalNav = memo((props) => {
             <span className="mini-icon">-</span>
           </Link>
         </li>
-        <ul className="sub-nav">
-          <li className="nav-item">
-            <Link
-              className={`${
-                location.pathname === "/dashboard/app/add-new-training"
-                  ? "active"
-                  : ""
-              } nav-link`}
-              to="/dashboard/app/add-new-training"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+        {entity == "Professor" && (
+          <ul className="sub-nav">
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/add-new-training"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/add-new-training"
               >
-                <g>
-                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                </g>
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
 
-              <i className="sidenav-mini-icon"> E </i>
-              <span className="item-name">Ajouter formation</span>
-            </Link>
-          </li>
-
-          <li className="nav-item">
-            <Link
-              className={`${
-                location.pathname === "/dashboard/app/list-training"
-                  ? "active"
-                  : ""
-              } nav-link`}
-              to="/dashboard/app/list-training"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="10"
-                viewBox="0 0 24 24"
-                fill="currentColor"
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Ajouter formation</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`${
+                  location.pathname === "/dashboard/app/list-training"
+                    ? "active"
+                    : ""
+                } nav-link`}
+                to="/dashboard/app/list-training"
               >
-                <g>
-                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
-                </g>
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <g>
+                    <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                  </g>
+                </svg>
 
-              <i className="sidenav-mini-icon"> E </i>
-              <span className="item-name">Liste des formations</span>
-            </Link>
-          </li>
-        </ul>
+                <i className="sidenav-mini-icon"> E </i>
+                <span className="item-name">Liste des formations</span>
+              </Link>
+            </li>
+          </ul>
+        )}
 
         {/* PARTIES DES COURS */}
         {/* <li className="nav-item static-item">

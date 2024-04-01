@@ -1,6 +1,9 @@
 const { Schema, model } = require("mongoose");
 const profSchema = new Schema(
   {
+    description: {
+      type: String,
+    },
     firstName: {
       type: String,
       required: true,
@@ -39,9 +42,8 @@ const profSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    reponsebleFor: {
-      type: [String], // linked to Academy
-      default: [],
+    responsableFor: {
+      type: String, // linked to Academy
     },
     trainingsList: {
       type: [String], // linked to Training
@@ -50,5 +52,5 @@ const profSchema = new Schema(
   },
   { timestamps: true }
 );
-const model = model("Professor", profSchema);
-module.exports = model;
+const ProfessorModel = model("Professor", profSchema);
+module.exports = ProfessorModel;

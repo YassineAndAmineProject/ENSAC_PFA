@@ -20,10 +20,12 @@ import SignUp from "./SignUp";
 import { UserContext } from "../context/userContext";
 import { Dropdown } from "react-bootstrap";
 import CustomToggle from "./dropdowns";
-import defaultProfilePic from "../../src/assets/images/avatars/default-profile-picture1.jpg"; 
+import defaultProfilePic from "../../src/assets/images/avatars/default-profile-picture1.jpg";
 import axios from "axios";
 import "../../src/assets/scss/maker.css";
 import { toast } from "react-toastify";
+import A_Nav_Bar_Search from "./A_Nav_Bar_Search";
+import B_Search_Results_List from "./B_Search_Results_List";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -45,12 +47,15 @@ const Navbar = () => {
   // LOGIQUE BACKEND COMMENCE ICI :
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
+  const entity = currentUser?.entity;
   const [fetchedUser, setFetchedUser] = useState(null);
   useEffect(() => {
     const fetchConcernedUser = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+          `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/get/${
+            currentUser?.id
+          }`
         );
         setFetchedUser(response.data);
         console.log(fetchedUser);
@@ -105,7 +110,6 @@ const Navbar = () => {
                   Academies
                 </Link>
               </Box>
-
               <Box className={classes.navbar_link_mobail}>
                 <IconButton onClick={() => setOpenMenu(!openMenu)}>
                   <MenuIcon />
@@ -169,14 +173,10 @@ const Navbar = () => {
                 </Drawer>
               </Box>
             </Box>
+            <div style={{ position: "relative" }}>
+              <A_Nav_Bar_Search />
+            </div>
             {/* searchbar nav bar */}
-            <Box className={classes.navbar_laft_searchbar}>
-              <SearchIcon className={classes.navbar_laft_searchbar_icon} />
-              <InputBase
-                placeholder="Cherchez-vous un cours ?"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Box>
           </Box>
           {/* button left nav bar */}
           {!token ? (
@@ -247,7 +247,7 @@ const Navbar = () => {
                     {currentUser?.fullName}
                   </h6>
                   <p className="mb-0 caption-sub-title">
-                    {currentUser?.entity}
+                    {entity == "Professor" ? "Professeur" : "Etudiant"}
                   </p>
                 </div>
               </Dropdown.Toggle>

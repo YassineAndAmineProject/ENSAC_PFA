@@ -1,4 +1,4 @@
-const { Schema, model } = require("");
+const { Schema, model } = require("mongoose");
 const chapterSchema = new Schema(
   {
     courseId: {
@@ -15,12 +15,10 @@ const chapterSchema = new Schema(
     },
     video: {
       type: String,
-    },
-    images: {
-      type: [String],
+      required: true,
     },
   },
   { timestamps: true }
 );
-model = model("Chapter", chapterSchema);
-module.exports = model;
+const chapterModel = model("Chapter", chapterSchema);
+module.exports = chapterModel;

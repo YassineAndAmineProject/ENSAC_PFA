@@ -7,11 +7,10 @@ const domainSchema = new Schema(
     },
     categories: {
       type: [String],
-      required: true,
     },
   },
   { timestamps: true }
 );
 
-const model = model("Domain", domainSchema);
-module.exports = model;
+const domainModel = model("Domain", domainSchema);
+module.exports = domainModel;

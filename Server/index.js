@@ -3,12 +3,30 @@ const cors = require("cors");
 const { connect } = require("mongoose");
 require("dotenv").config();
 const handleError = require("./middlewares/handleError");
+//routes : ------------------------------------------------
 const studentRoutes = require("./Routes/StudentRoute");
+const professorRoutes = require("./Routes/ProfessorRoute");
+const adminRoutes = require("./Routes/AdminRoute");
+const academyRoutes = require("./Routes/AcademyRoute");
+const trainingRoutes = require("./Routes/TrainingRoute");
+const courseRoutes = require("./Routes/CourseRoute");
+const chapterRoutes = require("./Routes/ChapterRoute");
+const domainRoute = require("./Routes/DomainRoute");
+// --------------------------------------------------------
 const app = express();
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+// attribution des routes : -------------------------------
 app.use("/api/students", studentRoutes);
+app.use("/api/professors", professorRoutes);
+app.use("/api/admins", adminRoutes);
+app.use("/api/academies", academyRoutes);
+app.use("/api/trainings", trainingRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/chapters", chapterRoutes);
+app.use("/api/domains", domainRoute);
+//---------------------------------------------------------
 app.use(handleError);
 app.all("/*", (req, res) => {
   res.status(404);

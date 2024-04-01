@@ -45,6 +45,7 @@ const UserProfile = () => {
   const { currentUser } = useContext(UserContext);
   const [fetchedUser, setFetchedUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const entity = currentUser?.entity;
   const token = currentUser?.token;
   useEffect(() => {
     if (!token) {
@@ -56,7 +57,9 @@ const UserProfile = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+          `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/get/${
+            currentUser?.id
+          }`
         );
         setFetchedUser(response.data);
         console.log(fetchedUser);
@@ -149,7 +152,13 @@ const UserProfile = () => {
                       <h4 className="me-2 h4">
                         {fetchedUser?.firstName + " " + fetchedUser?.lastName}
                       </h4>
-                      <span> - {currentUser?.entity} </span>
+                      <span>
+                        {" "}
+                        -{" "}
+                        {currentUser?.entity == "Professor"
+                          ? "Professeur"
+                          : "Etudiant"}
+                      </span>
                     </div>
                   </div>
                   <Nav
@@ -680,7 +689,7 @@ const UserProfile = () => {
                           type="text"
                           id="exampleInputDisabled1"
                           disabled
-                          defaultValue="(212) 6645-74629"
+                          defaultValue={`${fetchedUser?.phone}`}
                           className="m-2"
                         />
                       </Form.Group>

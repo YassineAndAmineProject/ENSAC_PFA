@@ -57,12 +57,15 @@ const Header = memo((props) => {
   // LOGIQUE BACKEND COMMENCE ICI :
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
+  const entity = currentUser?.entity;
   const [fetchedUser, setFetchedUser] = useState(null);
   useEffect(() => {
     const fetchConcernedUser = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+          `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/get/${
+            currentUser?.id
+          }`
         );
         setFetchedUser(response.data);
         console.log(fetchedUser);
@@ -87,7 +90,7 @@ const Header = memo((props) => {
         <Container fluid className="navbar-inner">
           <Link to="/dashboard" className="navbar-brand">
             <Logo color={true} />
-            <h4 className="logo-title">Yassine azami</h4>
+            <h4 className="logo-title">Power UI</h4>
           </Link>
           <div
             className="sidebar-toggle"
@@ -440,7 +443,9 @@ const Header = memo((props) => {
                       {currentUser?.fullName}
                     </h6>
                     <p className="mb-0 caption-sub-title">
-                      {currentUser?.entity}
+                      {currentUser?.entity == "Professor"
+                        ? "Professeur"
+                        : "Etudiant"}
                     </p>
                   </div>
                 </Dropdown.Toggle>

@@ -13,7 +13,7 @@ import Error500 from "../views/dashboard/errors/error500";
 import Maintenance from "../views/dashboard/errors/maintenance";
 import About from "../page/About";
 import UserProvider from "../context/userContext";
-import SignInFormProf from "../views/dashboard/auth/sign-up-prof";
+import SignInFormProf from "../views/dashboard/auth/sign-in-prof";
 // const SimpleRouter = () => {
 //     return (
 //             <>

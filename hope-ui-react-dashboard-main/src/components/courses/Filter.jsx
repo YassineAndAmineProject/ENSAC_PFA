@@ -1,9 +1,9 @@
-import { Box, Typography } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom';
-import { comCss } from '../ComponentsCss'
-
-const Filter = () => {
+import { Box, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { comCss } from "../ComponentsCss";
+import axios from "axios";
+const Filter = ({ fetchedDomains, fetchTrainingsByDomain }) => {
   const classes = comCss();
   return (
     <Box className={classes.course_filter}>
@@ -12,36 +12,40 @@ const Filter = () => {
       </Typography>
       <Box className={classes.divider}></Box>
       <Box className={classes.filter_category}>
-        <Typography variant="h3" component="h3" className={classes.filter_catagory_title}>
-          CATEGORY
+        <Typography
+          variant="h3"
+          component="h3"
+          className={classes.filter_catagory_title}
+        >
+          DOMAINE
         </Typography>
         <Box className={classes.filter_category_box}>
-          <Link to="/" className={classes.filter_category_link}>All</Link>
-          <Link to="/" className={classes.filter_category_link}>Angular</Link>
-          <Link to="/" className={classes.filter_category_link}>Bootstrap</Link>
-          <Link to="/" className={classes.filter_category_link}>CSS3</Link>
-          <Link to="/" className={classes.filter_category_link}>GatsBy</Link>
-          <Link to="/" className={classes.filter_category_link}>GraphQL</Link>
-          <Link to="/" className={classes.filter_category_link}>Javascript</Link>
-          <Link to="/" className={classes.filter_category_link}>Python</Link>
-          <Link to="/" className={classes.filter_category_link}>React</Link>
-          <Link to="/" className={classes.filter_category_link}>WordPress</Link>
+          <Link
+            onClick={() => {
+              fetchTrainingsByDomain(`tout`);
+            }}
+            className={classes.filter_category_link}
+          >
+            Tout
+          </Link>
+          {fetchedDomains &&
+            fetchedDomains.map((domain, index) => {
+              return (
+                <Link
+                  key={index}
+                  onClick={() => {
+                    fetchTrainingsByDomain(`${domain.name}`);
+                  }}
+                  className={classes.filter_category_link}
+                >
+                  {domain.name}
+                </Link>
+              );
+            })}
         </Box>
       </Box>
-      <Box className={classes.divider}></Box>
-      <Box className={classes.filter_category}>
-        <Typography variant="h3" component="h3" className={classes.filter_catagory_title}>
-        LEVEL
-        </Typography>
-        <Box className={classes.filter_category_box}>
-          <Link to="/" className={classes.filter_category_link}>Beginner</Link>
-          <Link to="/" className={classes.filter_category_link}>Intermediate</Link>
-          <Link to="/" className={classes.filter_category_link}>Expert</Link>
-        </Box>
-      </Box>
-
     </Box>
-  )
-}
+  );
+};
 
-export default Filter
+export default Filter;
