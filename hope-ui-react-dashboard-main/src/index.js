@@ -97,7 +97,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: "/singleCourse/:id",
+      path: "/singleCourse/:id/",
       element: (
         <UserProvider>
           <SingleCourse />

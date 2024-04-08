@@ -1,5 +1,6 @@
 const Professor = require("../models/AppSchemas/Professor");
 const HttpError = require("../models/HttpError/ErrorModel");
+const Academy = require("../models/AppSchemas/Academy");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -38,13 +39,27 @@ exports.loginProfessor = async (req, res, next) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).json({
-      token,
-      id,
-      fullName,
-      isResp: prof.isResponsable,
-      entity: "Professor",
-    });
+    if (prof.isResponsable) {
+      const academyId = prof.responsableFor;
+      const concernedAcademy = await Academy.findById(academyId);
+      const academyResponsables = concernedAcademy.responsables;
+      res.status(200).json({
+        token,
+        id,
+        fullName,
+        isResp: prof.isResponsable,
+        entity: "Professor",
+        academyResponsables,
+      });
+    } else {
+      res.status(200).json({
+        token,
+        id,
+        fullName,
+        isResp: prof.isResponsable,
+        entity: "Professor",
+      });
+    }
   } catch (error) {
     console.log(error);
     return next(

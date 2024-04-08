@@ -9,6 +9,7 @@ import bg from "../../../assets/images/auth/30.png";
 import { UserContext } from "../../../context/userContext";
 import { useContext, useState } from "react";
 import axios from "axios";
+import socket from "../../../Socket/socket";
 const SignInFormProf = () => {
   const [error, setError] = useState("");
   const { setCurrentUser } = useContext(UserContext);
@@ -29,6 +30,15 @@ const SignInFormProf = () => {
         formData
       );
       setCurrentUser(response.data);
+      if (response.data.isResp) {
+        let room = "";
+        for (let i = 0; i < response.data.academyResponsables.length; ++i) {
+          room += response.data.academyResponsables[i];
+        }
+        console.log("THIS IS THE PROFESSOR ROOM : ");
+        console.log(room);
+        socket.emit("join_room", room);
+      }
       navigate("/dashboard");
     } catch (err) {
       console.error(err);

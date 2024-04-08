@@ -133,3 +133,20 @@ exports.freeTrainingsFromAcademy = async (req, res, next) => {
     return next(new HttpError(err));
   }
 };
+// ce controleur est trop spécifique , je l'utilise dans le composant CourseSideBar pour formuler ce qu'on appel "room" en se basant sur les Id des responsables de l'académie qui a fournit ce cours :
+exports.getRoomFromTraining = async (req, res, next) => {
+  const trainingId = req.params.trainingId;
+  try {
+    const concernedTraining = await Training.findById(trainingId);
+    const academyId = concernedTraining.academyId;
+    const concernedAcademy = await Academy.findById(academyId);
+    const responsables = concernedAcademy.responsables;
+    let room = "";
+    for (let i = 0; i < responsables.length; i++) {
+      room += responsables[i];
+    }
+    res.status(201).json(room);
+  } catch (err) {
+    return next(new HttpError(err));
+  }
+};

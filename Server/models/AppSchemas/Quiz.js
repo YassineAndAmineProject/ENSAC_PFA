@@ -9,7 +9,7 @@ const quizSchema = new Schema(
         type:String, 
         required:true
     },
-    note:{
+    mark:{
         type:Number, 
         default:0,  
         max: 20

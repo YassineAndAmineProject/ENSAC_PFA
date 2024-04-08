@@ -16,6 +16,7 @@ import Footer from "../components/Footer";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+
 const data = [1, 2, 3, 4, 5, 6, 7];
 const Home = () => {
   const classes = pageCss();

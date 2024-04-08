@@ -190,7 +190,7 @@ const Navbar = () => {
                 S'inscrire
               </Button>
               <Button
-                href="auth/sign-in"
+                href="/auth/sign-in"
                 className={`${classes.button} ${classes.button_2}`}
                 onClick={handleClick}
               >

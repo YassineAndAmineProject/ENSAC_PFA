@@ -3,6 +3,8 @@ const cors = require("cors");
 const { connect } = require("mongoose");
 require("dotenv").config();
 const handleError = require("./middlewares/handleError");
+const { Server } = require("socket.io");
+const http = require("http");
 //routes : ------------------------------------------------
 const studentRoutes = require("./Routes/StudentRoute");
 const professorRoutes = require("./Routes/ProfessorRoute");
@@ -12,6 +14,7 @@ const trainingRoutes = require("./Routes/TrainingRoute");
 const courseRoutes = require("./Routes/CourseRoute");
 const chapterRoutes = require("./Routes/ChapterRoute");
 const domainRoute = require("./Routes/DomainRoute");
+const notificationsRoute = require("./Routes/NotificationRoute");
 // --------------------------------------------------------
 const app = express();
 app.use(express.json({ extended: true }));
@@ -26,7 +29,27 @@ app.use("/api/trainings", trainingRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/chapters", chapterRoutes);
 app.use("/api/domains", domainRoute);
-//---------------------------------------------------------
+app.use("/api/notifications", notificationsRoute);
+//----- logique socket :
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
+  },
+});
+io.on("connection", (socket) => {
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on("join_room", (data) => {
+    socket.join(data);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("receive_message", data);
+  });
+});
+// route de résérve :
 app.use(handleError);
 app.all("/*", (req, res) => {
   res.status(404);
@@ -40,7 +63,7 @@ app.all("/*", (req, res) => {
 });
 connect(process.env.CONNECTION_STRING)
   .then(() => {
-    app.listen(process.env.PORT || 5000, () => {
+    server.listen(process.env.PORT || 5000, () => {
       console.log(`Server launched on port : ${process.env.PORT}`);
     });
   })
