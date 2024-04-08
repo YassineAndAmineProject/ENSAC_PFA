@@ -52,7 +52,12 @@ import Logout from "../components/partials/dashboard/FunctionnalityComponent/Log
 import AddAcademy from "../views/dashboard/app/add-academy";
 import AddNewTraining from "../views/dashboard/app/add-new-training";
 import TrainingsList from "../views/dashboard/app/trainings-list";
-import AddCourseToTraining from "../views/dashboard/app/add-course";
+//import AddCourseToTraining from "../views/dashboard/app/add-chapter";
+import TrainingCardView from "../components/TrainingCardView";
+import ListView from "../components/listViews/ListView";
+import ListCoursesByTraining from "../components/CoursesByTraining/ListCoursesByTraining";
+import AddChapterToCourse from "../views/dashboard/app/add-chapter";
+import Notifications from "../components/notifications/Notifications";
 // petite remarque : ouvre le composant Default, tu trouveras un Outlet dans lequel les "children" varient ainsi que tu trouveras l'élément Header qui est fixe...
 export const DefaultRouter = [
   {
@@ -124,8 +129,24 @@ export const DefaultRouter = [
         element: <TrainingsList />,
       },
       {
-        path: "/dashboard/app/add-new-course-to/:id",
-        element: <AddCourseToTraining />,
+        path: "/dashboard/app/card-list-training",
+        element: <TrainingCardView />,
+      },
+      {
+        path: "/dashboard/app/training/:id",
+        element: <ListCoursesByTraining />,
+      },
+      {
+        path: "/dashboard/app/list-table-training",
+        element: <ListView />,
+      },
+      {
+        path: "/dashboard/app/add-new-chapter-to/:id",
+        element: <AddChapterToCourse />,
+      },
+      {
+        path: "/dashboard/notifications",
+        element: <Notifications />,
       },
       {
         path: "dashboard/admin/admin",

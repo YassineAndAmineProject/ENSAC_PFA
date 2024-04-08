@@ -7,6 +7,20 @@ import bg56 from "./assets/images/academies/56.png";
 import bg57 from "./assets/images/academies/57.png";
 import { Video, GraduationCap, PanelRight } from "lucide-react";
 import team33 from "./assets/images/team/33.webp";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight,
+  faBoxArchive,
+  faCalendarDays,
+  faCircle,
+  faCopy,
+  faPaperclip,
+  faShareNodes,
+  faSquareCheck,
+  faTag,
+  faTrash,
+  faUserPlus,
+} from "@fortawesome/free-solid-svg-icons";
 export const Homeextra_1 = [
   {
     icon: <PanelRight size={28} strokeWidth={3} />,
@@ -456,5 +470,131 @@ export const projects = [
     },
     bg: bg57,
     budget: 6067,
+  },
+];
+
+export const comments = [
+  {
+    id: 1,
+    text: "uploaded a file",
+    user: {
+      name: "Anthony Van Dyck",
+      url: "#!",
+    },
+    attachment: bg57,
+    date: "Oct 3 at 4:38 pm",
+    details: (
+      <p className="text-body-highlight fw-semibold fs-9 mb-0">Fruit blast</p>
+    ),
+  },
+  {
+    id: 2,
+    text: "added a subtask",
+    user: {
+      name: "Kazimir Malevich",
+      url: "#!",
+    },
+    date: "Oct 4 at 12:16 pm",
+  },
+  {
+    id: 3,
+    text: "created this task",
+    user: {
+      name: "Kazimir Malevich",
+      url: "#!",
+    },
+    own: true,
+    date: "Oct 4 at 12:18 pm",
+  },
+  {
+    id: 4,
+    text: "changed status from ",
+    user: {
+      name: "Henri Rousseau",
+      url: "#!",
+    },
+    date: "Oct 5 at 9:59 am",
+    details: (
+      <div className="d-flex text-body-secondary fs-9">
+        <p className="mb-0 fw-semibold text-body-highlight">
+          <FontAwesomeIcon
+            icon={faCircle}
+            className="text-primary"
+            transform="shrink-8"
+          />
+          Doing
+        </p>
+        <span className="mx-2">to</span>
+        <p className="mb-0 fw-semibold text-body-highlight">
+          <FontAwesomeIcon
+            icon={faCircle}
+            className="text-primary"
+            transform="shrink-8"
+          />
+          Review
+        </p>
+      </div>
+    ),
+  },
+  {
+    id: 5,
+    text: "commented",
+    user: {
+      name: "Peter Paul Rubens",
+      url: "#!",
+    },
+    date: "Oct 5 at 11:09 pm",
+    details: (
+      <p className="text-body fs-9 mb-0">
+        There are many variations of passages of Lorem Ipsum available, but the
+        majority have suffered alteration in some form
+      </p>
+    ),
+  },
+];
+
+export const addToCardItems = [
+  {
+    icon: faUserPlus,
+    label: "Assignee",
+  },
+  {
+    icon: faTag,
+    label: "Labels",
+  },
+  {
+    icon: faPaperclip,
+    label: "Attachments",
+  },
+  {
+    icon: faSquareCheck,
+    label: "Checklist",
+  },
+  {
+    icon: faCalendarDays,
+    label: "Dates",
+  },
+];
+
+export const actionItems = [
+  {
+    icon: faArrowRight,
+    label: "Move",
+  },
+  {
+    icon: faCopy,
+    label: "Copy",
+  },
+  {
+    icon: faTrash,
+    label: "Remove",
+  },
+  {
+    icon: faBoxArchive,
+    label: "Archive",
+  },
+  {
+    icon: faShareNodes,
+    label: "Share",
   },
 ];

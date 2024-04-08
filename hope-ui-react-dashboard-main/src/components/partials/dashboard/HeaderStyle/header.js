@@ -410,31 +410,9 @@ const Header = memo((props) => {
                     alt="User-Profile"
                     className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
                   />
-                  <img
-                    src={""}
-                    alt="User-Profile"
-                    className="theme-color-purple-img img-fluid avatar avatar-50 avatar-rounded"
-                  />
-                  <img
-                    src={avatars3}
-                    alt="User-Profile"
-                    className="theme-color-blue-img img-fluid avatar avatar-50 avatar-rounded"
-                  />
-                  <img
-                    src={avatars5}
-                    alt="User-Profile"
-                    className="theme-color-green-img img-fluid avatar avatar-50 avatar-rounded"
-                  />
-                  <img
-                    src={avatars6}
-                    alt="User-Profile"
-                    className="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded"
-                  />
-                  <img
-                    src={avatars4}
-                    alt="User-Profile"
-                    className="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded"
-                  />
+                  
+                  
+                  
                   <div className="caption ms-3 d-none d-md-block ">
                     <h6 className="mb-0 caption-title">
                       {currentUser?.fullName}

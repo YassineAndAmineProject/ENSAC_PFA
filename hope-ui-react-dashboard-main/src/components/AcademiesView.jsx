@@ -10,9 +10,8 @@ import { projects } from "../data";
 import AdvanceTableProvider from "../provider/AdvanceTableProvider";
 import GridAndModalItem from "./GridAndModal";
 
-
 //
-import { Box,  } from "@mui/material";
+import { Box } from "@mui/material";
 import { Container } from "@mui/system";
 
 import Pagebanner from "../components/Pagebanner";
@@ -43,47 +42,29 @@ const AcademiesBoardView = () => {
 
   return (
     <>
-    <Navbar />
-    <Pagebanner title="Cours" />
-    <Box className={classes.course_section}>
-      <Container maxWidth="lg">
-      <AdvanceTableProvider {...table}>
-        <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center">
-          <h2 className="mb-0">
-            <span className="me-3">Projects</span>{" "}
-            <span className="fw-normal text-body-tertiary">
-              ({projects.length})
-            </span>
-          </h2>
-          <Link
-            className="btn btn-primary px-5"
-            to="/apps/project-management/create-new"
-          >
-            <FontAwesomeIcon icon={faPlus} className="me-2" />
-            Add new project
-          </Link>
-        </div>
-        <Row className="g-3 mb-9">
-          {table
-            .getRowModel()
-            .rows.map((row) => row.original)
-            .map((project) => (
-              <Col xs={12} sm={6} md={4} xxl={3} key={project.id}>
-                <GridAndModalItem project={project} />
-              </Col>
-            ))}
-        </Row>
-      </AdvanceTableProvider>
-      </Container>
-    </Box>
+      <Navbar />
+      <Pagebanner title="Nos académies" />
+      <Box className={classes.course_section}>
+        <Container maxWidth="lg">
+          <AdvanceTableProvider {...table}>
+            <div className="d-flex flex-wrap mb-4 gap-3 gap-sm-6 align-items-center"></div>
+            <Row className="g-3 mb-9">
+              {table
+                .getRowModel()
+                .rows.map((row) => row.original)
+                .map((project) => (
+                  <Col xs={12} sm={6} md={4} xxl={3} key={project.id}>
+                    <GridAndModalItem project={project} />
+                  </Col>
+                ))}
+            </Row>
+          </AdvanceTableProvider>
+        </Container>
+      </Box>
 
-    <Footer />
-
-  </>
-   
+      <Footer />
+    </>
   );
 };
 
 export default AcademiesBoardView;
-
-

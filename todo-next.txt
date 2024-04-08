@@ -2,14 +2,11 @@
 
 1. Ajouter une page de Sign up pour prof  ❎👍
 
-
 2. Ajouter une page pour creation de academies (admin)  ❎👍
-(name
+(name 
 picture
 description
 domain)
-
-
 
 3. Ajouter une page pour creation de formation: ❎👍
 name V
@@ -24,9 +21,26 @@ difficulty V
 {fait}
 
 -------------------------ETUDIANTS------------------------
+
 1. Ajouter un gidLayout pour lister les academies (session normale) ❎🤞
 {fait mais reste à bien ajuster }
 2. Ajouter une page pour ajout des adresse social-medias (dashboard ) ❌😒
 {pas urgent}
+
 3. Ajouter une page descriptive de chaque academies (session normale) ❌
 {prochainement}
+
+------------------ NEW TASKS --------------------------------
+1. Dropdown acceuil pour login
+
+
+
+
+
+
+-------------------- NEXT -------------------------------
+1. Ajout d'une page pour visualiser les demandes d'inscription aux formations de telle sorte que cette page est obtenu une fois cliquant sur une  notification. 
+qui affiche une ligne indiquant le nom et la demande de l'étudiant et deux boutons 
+approuver et rejeter.
+
+2. Ajout d'une page pour le quiz pour chaque cours (n chapitres). (10 questions qcm radio - dropdown )

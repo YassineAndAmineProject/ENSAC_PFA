@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Container,
   Drawer,
   IconButton,
@@ -9,20 +8,18 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { comCss } from "./ComponentsCss";
-import logo from "../image/logo.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import { SearchIcon } from "lucide-react";
-import { Spinner } from "@nextui-org/react";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
 import { UserContext } from "../context/userContext";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Nav } from "react-bootstrap";
 import CustomToggle from "./dropdowns";
 import axios from "axios";
 import "../../src/assets/scss/maker.css";
 import { toast } from "react-toastify";
+import Avatar from "./Avatar";
+import ItemsDropdownMenu from "./ItemsDropdown";
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -197,72 +194,22 @@ const Navbar = () => {
               </Button>
             </Box>
           ) : (
-            <Dropdown as="li" className="nav-item">
-              <Dropdown.Toggle
-                as={CustomToggle}
-                variant=" nav-link py-0 d-flex align-items-center"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <img
-                  src={fetchedUser?.profilePicture}
-                  alt="User-Profile"
-                  className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
-                />
-                <img
-                  src={""}
-                  alt="User-Profile"
-                  className="theme-color-purple-img img-fluid avatar avatar-50 avatar-rounded"
-                />
-                <img
-                  src={""}
-                  alt="User-Profile"
-                  className="theme-color-blue-img img-fluid avatar avatar-50 avatar-rounded"
-                />
-                <img
-                  src={""}
-                  alt="User-Profile"
-                  className="theme-color-green-img img-fluid avatar avatar-50 avatar-rounded"
-                />
-                <img
-                  src={""}
-                  alt="User-Profile"
-                  className="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded"
-                />
-                <img
-                  src={""}
-                  alt="User-Profile"
-                  className="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded"
-                />
-                <div className="caption ms-3 d-none d-md-block ">
-                  <h6 className="mb-0 caption-title">
-                    {currentUser?.fullName}
-                  </h6>
-                  <p className="mb-0 caption-sub-title">
-                    {currentUser?.entity}
-                  </p>
-                </div>
-              </Dropdown.Toggle>
-              <Dropdown.Menu
-                className="dropdown-menu-end"
-                aria-labelledby="navbarDropdown"
-              >
-                <Dropdown.Item
-                  href={`/dashboard/app/user-profile/${currentUser?.id}`}
+            <Nav.Item>
+              <Dropdown autoClose="outside" className="h-100">
+                <Dropdown.Toggle
+                  as={Link}
+                  to="#!"
+                  className="dropdown-caret-none nav-link pe-0 py-0 lh-1 h-100 d-flex align-items-center"
+                  variant=""
                 >
-                  Profile
-                </Dropdown.Item>
-                <Dropdown.Item href="/dashboard/app/user-profile-edit">
-                  Modifier Profile
-                </Dropdown.Item>
-                <Dropdown.Item href="#">Privacy Setting</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="/logout">Logout</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                  <Avatar src={fetchedUser?.profilePicture} size="l" />
+                </Dropdown.Toggle>
+                <ItemsDropdownMenu
+                  user={fetchedUser}
+                  currentUser={currentUser}
+                />
+              </Dropdown>
+            </Nav.Item>
           )}
         </Box>
       </Container>
