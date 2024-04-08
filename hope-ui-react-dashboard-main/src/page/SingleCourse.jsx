@@ -9,7 +9,7 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagebanner from "../components/Pagebanner";
 import { pageCss } from "./PageCss";
 
@@ -20,7 +20,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { comCss } from "../components/ComponentsCss";
 import { useParams } from "react-router-dom";
-
+import axios from "axios";
 const itemtabs = [
   "Introduction",
   "Compréhension des Fondamentaux de React Native",
@@ -29,7 +29,6 @@ const itemtabs = [
   "Projet",
   "Conclusion",
 ];
-const data = [1, 2, 3, 4];
 
 const SingleCourse = () => {
   const classes = pageCss();
@@ -39,21 +38,61 @@ const SingleCourse = () => {
     setTabvalue(newValue);
   };
 
-  //RECUPERER LE ID DE L'URL
+  //LOGIQUE BACK :
   const { id } = useParams();
+  const [training, setTraining] = useState(null);
+  const [chaptersByCourse, setChaptersByCourse] = useState(null);
+  useEffect(() => {
+    const fetchRequiredData = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/trainings/getTraining/${id}`
+        );
 
+        const fetchedTraining = response.data;
+        setTraining(fetchedTraining);
+        const courses = fetchedTraining.courses;
+        const coursesPromises = courses.map(async (course) => {
+          const resp = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/courses/getCourse/${course}`
+          );
+          return resp.data;
+        });
+        const coursesList = await Promise.all(coursesPromises);
+        const chapsByCoursePromises = coursesList.map(async (course) => {
+          const courseName = course.title;
+          const chapsPromises = course.chapters.map(async (chapter) => {
+            const res = await axios.get(
+              `${process.env.REACT_APP_BASE_URL}/chapters/getChapter/${chapter}`
+            );
+            return res.data;
+          });
+          const chaps = await Promise.all(chapsPromises);
+          return { courseName, chaps };
+        });
+        console.log("Chaps by course : ");
+        const chapsByCourse = await Promise.all(chapsByCoursePromises);
+        setChaptersByCourse(chapsByCourse);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchRequiredData();
+  }, []);
   return (
     <>
       <Navbar />
-      <Pagebanner
-        title="Démarrer avec JavaScript"
-        subtitle="JavaScript est le langage de programmation populaire qui alimente les pages web et les applications web. Ce cours vous permettra de commencer à coder en JavaScript."
-        course_time="12 heures 34 minutes"
-        course_enroll="5 Inscrits"
-        course_rating="4"
-        course_expart="Intermédiaire"
-        className={style.page_banner_singleCourse}
-      />
+      {training && (
+        <Pagebanner
+          title={`${training.name}`}
+          subtitle={training.subtitle}
+          course_time="12 heures 34 minutes"
+          course_enroll="5 Inscrits"
+          course_rating="4"
+          course_expart={`${training.difficulty}`}
+          className={style.page_banner_singleCourse}
+        />
+      )}
       <Box className={classes.course_banner}></Box>
       <Container maxWidth="lg">
         <Grid
@@ -75,11 +114,11 @@ const SingleCourse = () => {
                 <Tab label="Description" />
               </Tabs>
               <Box className={classes.single_course_tabs_box}>
-                {tabValue === 0 && (
+                {tabValue === 0 && chaptersByCourse && (
                   <Box className={classes.single_course_tabs}>
-                    {itemtabs.map((item) => (
+                    {chaptersByCourse.map((item, index) => (
                       <Box
-                        key={item}
+                        key={index}
                         className={classes.single_course_tabs_list}
                       >
                         <Accordion>
@@ -88,19 +127,19 @@ const SingleCourse = () => {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                           >
-                            <Typography>{item}</Typography>
+                            <Typography>{item.courseName}</Typography>
                           </AccordionSummary>
                           <AccordionDetails>
-                            {data.map((item) => (
+                            {item.chaps.map((chapter, index) => (
                               <Box
-                                key={item}
+                                key={index}
                                 className={classes.single_course_tabs_content}
                               >
                                 <Typography variant="h4">
                                   <LockOutlinedIcon
                                     className={classes.single_course_tabs_icon}
                                   />
-                                  Ce que vous obtiendrez en suivant ce cours
+                                  {chapter.title}
                                 </Typography>
                                 <Typography variant="h4">9m 34s</Typography>
                               </Box>
@@ -114,22 +153,7 @@ const SingleCourse = () => {
                 {tabValue === 1 && (
                   <Box className={classes.single_course_tabs_des}>
                     <Typography variant="h4" pb={3}>
-                      Si vous apprenez à programmer pour la première fois, ou si
-                      vous venez d'un autre langage, ce cours, JavaScript:
-                      Démarrage, vous donnera les bases pour coder en
-                      JavaScript. Tout d'abord, vous découvrirez les types
-                      d'applications qui peuvent être construites avec
-                      JavaScript, et les plates-formes sur lesquelles elles
-                      fonctionneront.
-                    </Typography>
-                    <Typography variant="h4">
-                      Ensuite, vous explorerez les bases du langage, en donnant
-                      de nombreux exemples. Enfin, vous mettrez en pratique vos
-                      connaissances en JavaScript et modifierez une page web
-                      moderne et réactive. Lorsque vous aurez terminé ce cours,
-                      vous aurez les compétences et les connaissances en
-                      JavaScript pour créer des programmes simples, des
-                      applications web simples et modifier des pages web.
+                      {training.description}
                     </Typography>
                   </Box>
                 )}

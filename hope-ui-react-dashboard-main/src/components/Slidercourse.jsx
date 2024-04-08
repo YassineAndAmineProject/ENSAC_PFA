@@ -1,31 +1,44 @@
-import { Avatar, Box, IconButton, Typography } from '@mui/material'
-import React from 'react'
-import { Link } from 'react-router-dom';
-import { comCss } from './ComponentsCss'
-import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
-import SignalCellularAltOutlinedIcon from '@mui/icons-material/SignalCellularAltOutlined';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
-import StarHalfOutlinedIcon from '@mui/icons-material/StarHalfOutlined';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import img from "../image/course-react.jpg"
-import avaterimg from "../image/avatar-1-100x100.jpg"
+import { Avatar, Box, IconButton, Typography } from "@mui/material";
+import React from "react";
+import { Link } from "react-router-dom";
+import { comCss } from "./ComponentsCss";
+import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
+import SignalCellularAltOutlinedIcon from "@mui/icons-material/SignalCellularAltOutlined";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
+import StarHalfOutlinedIcon from "@mui/icons-material/StarHalfOutlined";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
+import img from "../image/course-react.jpg";
+import avaterimg from "../image/avatar-1-100x100.jpg";
 
-
-const Slidercourse = () => {
+const Slidercourse = ({
+  trainingId,
+  title,
+  difficulty,
+  academy,
+  picture,
+  academyPicture,
+}) => {
   const classes = comCss();
+  // LOGIQUE BACK END :
+
   return (
     <Box className={classes.Slidercourse}>
-      <Link to="/singleCourse">
-        <img src={img} alt="" className={classes.img_responsive} />
+      <Link>
+        <img
+          src={picture}
+          alt={`${trainingId}`}
+          className={classes.img_responsive}
+          style={{height:"12rem"}}
+        />
       </Link>
       <Typography variant="h4" component="h4" className={classes.slider_title}>
-        <Link to="/singleCourse/1">The Python Course: build web application</Link>
+        <Link to={`/singleCourse/${trainingId}`}>{title?.slice(0, 30)}...</Link>
       </Typography>
       <Typography variant="h5" component="p" className={classes.slider_time}>
         <AccessTimeOutlinedIcon /> 2 hours 46 minutes
       </Typography>
       <Typography variant="h5" component="p" className={classes.slider_label}>
-        <SignalCellularAltOutlinedIcon />  Expert
+        <SignalCellularAltOutlinedIcon /> {difficulty}
       </Typography>
       <Box className={classes.slider_Rating}>
         <StarOutlinedIcon />
@@ -39,8 +52,12 @@ const Slidercourse = () => {
       <Box className={classes.divider}></Box>
       <Box className={classes.slider_bottom_section}>
         <Box className={classes.slider_avater}>
-          <img alt="Remy Sharp" src={avaterimg} className={classes.img_avater} />
-          <span>Morris Mccoy</span>
+          <img
+            alt="Remy Sharp"
+            src={academyPicture}
+            className={classes.img_avater}
+          />
+          <span>{academy}</span>
         </Box>
         <Box className={classes.slider_bookmark}>
           <IconButton>
@@ -49,7 +66,7 @@ const Slidercourse = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default Slidercourse
+export default Slidercourse;

@@ -15,11 +15,17 @@ import { SearchIcon } from "lucide-react";
 import { UserContext } from "../context/userContext";
 import { Dropdown, Nav } from "react-bootstrap";
 import CustomToggle from "./dropdowns";
+import defaultProfilePic from "../../src/assets/images/avatars/default-profile-picture1.jpg";
 import axios from "axios";
 import "../../src/assets/scss/maker.css";
 import { toast } from "react-toastify";
+<<<<<<< HEAD
 import Avatar from "./Avatar";
 import ItemsDropdownMenu from "./ItemsDropdown";
+=======
+import A_Nav_Bar_Search from "./A_Nav_Bar_Search";
+import B_Search_Results_List from "./B_Search_Results_List";
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -41,12 +47,15 @@ const Navbar = () => {
   // LOGIQUE BACKEND COMMENCE ICI :
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
+  const entity = currentUser?.entity;
   const [fetchedUser, setFetchedUser] = useState(null);
   useEffect(() => {
     const fetchConcernedUser = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+          `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/get/${
+            currentUser?.id
+          }`
         );
         setFetchedUser(response.data);
         console.log(fetchedUser);
@@ -101,7 +110,6 @@ const Navbar = () => {
                   Academies
                 </Link>
               </Box>
-
               <Box className={classes.navbar_link_mobail}>
                 <IconButton onClick={() => setOpenMenu(!openMenu)}>
                   <MenuIcon />
@@ -165,14 +173,10 @@ const Navbar = () => {
                 </Drawer>
               </Box>
             </Box>
+            <div style={{ position: "relative" }}>
+              <A_Nav_Bar_Search />
+            </div>
             {/* searchbar nav bar */}
-            <Box className={classes.navbar_laft_searchbar}>
-              <SearchIcon className={classes.navbar_laft_searchbar_icon} />
-              <InputBase
-                placeholder="Cherchez-vous un cours ?"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Box>
           </Box>
           {/* button left nav bar */}
           {!token ? (
@@ -194,6 +198,7 @@ const Navbar = () => {
               </Button>
             </Box>
           ) : (
+<<<<<<< HEAD
             <Nav.Item>
               <Dropdown autoClose="outside" className="h-100">
                 <Dropdown.Toggle
@@ -201,6 +206,67 @@ const Navbar = () => {
                   to="#!"
                   className="dropdown-caret-none nav-link pe-0 py-0 lh-1 h-100 d-flex align-items-center"
                   variant=""
+=======
+            <Dropdown as="li" className="nav-item">
+              <Dropdown.Toggle
+                as={CustomToggle}
+                variant=" nav-link py-0 d-flex align-items-center"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src={
+                    fetchedUser?.profilePicture
+                      ? fetchedUser.profilePicture
+                      : defaultProfilePic
+                  }
+                  alt="User-Profile"
+                  className="theme-color-default-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-purple-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-blue-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-green-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-yellow-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <img
+                  src={""}
+                  alt="User-Profile"
+                  className="theme-color-pink-img img-fluid avatar avatar-50 avatar-rounded"
+                />
+                <div className="caption ms-3 d-none d-md-block ">
+                  <h6 className="mb-0 caption-title">
+                    {currentUser?.fullName}
+                  </h6>
+                  <p className="mb-0 caption-sub-title">
+                    {entity == "Professor" ? "Professeur" : "Etudiant"}
+                  </p>
+                </div>
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                className="dropdown-menu-end"
+                aria-labelledby="navbarDropdown"
+              >
+                <Dropdown.Item
+                  href={`/dashboard/app/user-profile/${currentUser?.id}`}
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30
                 >
                   <Avatar src={fetchedUser?.profilePicture} size="l" />
                 </Dropdown.Toggle>

@@ -1,4 +1,4 @@
-const { Schema, model } = require("");
+const { Schema, model } = require("mongoose");
 const courseSchema = new Schema(
   {
     trainingId: {
@@ -18,5 +18,5 @@ const courseSchema = new Schema(
   },
   { timestamps: true }
 );
-model = model("Course", courseSchema);
-module.exports = model;
+const CourseModel = model("Course", courseSchema);
+module.exports = CourseModel;

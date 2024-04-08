@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Hero from "../components/Hero";
 import Extra1 from "../components/Extra1";
 import { pageCss } from "./PageCss";
@@ -14,12 +14,49 @@ import { home_count } from "../data";
 import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { UserContext } from "../context/userContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 const data = [1, 2, 3, 4, 5, 6, 7];
 const Home = () => {
   const classes = pageCss();
   // LOGIQUE BACKEND COMMENCE ICI :
+  const [fetchedTrainings, setFetchedTrainings] = useState(null);
+  const [fetchedAcademies, setFetchedAcademies] = useState([]);
+  const [fetchedProfs, setFetchedProfs] = useState([]);
   const { currentUser } = useContext(UserContext);
   const token = currentUser?.token;
+  // Lecture des trainings :
+  useEffect(() => {
+    const fetchTrainingsAndAcademies = async () => {
+      try {
+        const trainingsResponse = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/trainings/getAllTrainings`
+        );
+        const fetchedTrainings = trainingsResponse.data;
+        const academiesPromises = fetchedTrainings.map(async (training) => {
+          const academyResponse = await axios.get(
+            `${process.env.REACT_APP_BASE_URL}/academies/get/${training.academyId}`
+          );
+          return academyResponse.data;
+        });
+        const fetchedAcademies = await Promise.all(academiesPromises);
+        setFetchedTrainings(fetchedTrainings);
+        setFetchedAcademies(fetchedAcademies);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchTrainingsAndAcademies();
+  }, []);
+  useEffect(() => {
+    const fetchProfs = async () => {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/professors/getAllProfs`
+      );
+      setFetchedProfs(response.data);
+    };
+    fetchProfs();
+  }, []);
   return (
     <>
       <NavBar />
@@ -38,7 +75,7 @@ const Home = () => {
             </Typography>
             <Box className={classes.home_course_slider}>
               <Grid container>
-                <Grid item md={4} sm={4} xs={12}>
+                {/* <Grid item md={4} sm={4} xs={12}>
                   <Slidercourse />
                 </Grid>
                 <Grid item md={4} sm={4} xs={12}>
@@ -46,7 +83,22 @@ const Home = () => {
                 </Grid>
                 <Grid item md={4} sm={4} xs={12}>
                   <Slidercourse />
-                </Grid>
+                </Grid> */}
+                {fetchedTrainings &&
+                  fetchedAcademies &&
+                  fetchedTrainings.map((training, index) => (
+                    <Grid item md={4} sm={4} xs={12} key={index}>
+                      <Slidercourse
+                        key={index}
+                        trainingId={training._id}
+                        title={training.name}
+                        difficulty={training.difficulty}
+                        picture={training.picture}
+                        academy={fetchedAcademies[index].name}
+                        academyPicture={fetchedAcademies[index].picture}
+                      />
+                    </Grid>
+                  ))}
               </Grid>
             </Box>
           </Box>
@@ -65,9 +117,18 @@ const Home = () => {
             </Box>
             <Box className={classes.home_course_slider}>
               <Slider {...settings}>
-                {data.map((item) => (
-                  <Slidercourse key={item} />
-                ))}
+                {fetchedTrainings &&
+                  fetchedTrainings.map((training, index) => (
+                    <Slidercourse
+                      key={index}
+                      trainingId={training._id}
+                      title={training.name}
+                      difficulty={training.difficulty}
+                      academy={fetchedAcademies[index].name}
+                      picture={training.picture}
+                      academyPicture={fetchedAcademies[index].picture}
+                    />
+                  ))}
               </Slider>
             </Box>
           </Box>
@@ -85,18 +146,18 @@ const Home = () => {
               </Link>
             </Box>
             <Grid container className={classes.home_mantor_box}>
-              <Grid item md={3} sm={3} xs={12}>
-                <Mantor />
-              </Grid>
-              <Grid item md={3} sm={3} xs={12}>
-                <Mantor />
-              </Grid>
-              <Grid item md={3} sm={3} xs={12}>
-                <Mantor />
-              </Grid>
-              <Grid item md={3} sm={3} xs={12}>
-                <Mantor />
-              </Grid>
+              {fetchedProfs &&
+                fetchedProfs.map((prof, index) => {
+                  return (
+                    <Grid item md={3} sm={3} xs={12} key={index}>
+                      <Mantor
+                        fullname={`${prof.firstName} ${prof.lastName}`}
+                        description={prof.description}
+                        image={prof.profilePicture}
+                      />
+                    </Grid>
+                  );
+                })}
             </Grid>
           </Box>
         </Container>
@@ -164,37 +225,39 @@ const Home = () => {
           </Box>
         </>
       )}
-      <Box className={classes.home_blog_section}>
-        <Container maxWidth="lg">
-          <Box className={classes.home_blog}>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography
-                variant="h3"
-                component="h3"
-                className={`${classes.slider_title} ${classes.home_carosol_title_padding}`}
-              >
-                Blog
-              </Typography>
-              <Link to="/blog" className={classes.home_view_all_button}>
-                Voir tout
-              </Link>
+      {false && (
+        <Box className={classes.home_blog_section}>
+          <Container maxWidth="lg">
+            <Box className={classes.home_blog}>
+              <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                <Typography
+                  variant="h3"
+                  component="h3"
+                  className={`${classes.slider_title} ${classes.home_carosol_title_padding}`}
+                >
+                  Blog
+                </Typography>
+                <Link to="/blog" className={classes.home_view_all_button}>
+                  Voir tout
+                </Link>
+              </Box>
+              <Box className={classes.home_blog_box}>
+                <Grid container spacing={3}>
+                  <Grid item md={4} sm={4} xs={12}>
+                    <Blog />
+                  </Grid>
+                  <Grid item md={4} sm={4} xs={12}>
+                    <Blog />
+                  </Grid>
+                  <Grid item md={4} sm={4} xs={12}>
+                    <Blog />
+                  </Grid>
+                </Grid>
+              </Box>
             </Box>
-            <Box className={classes.home_blog_box}>
-              <Grid container spacing={3}>
-                <Grid item md={4} sm={4} xs={12}>
-                  <Blog />
-                </Grid>
-                <Grid item md={4} sm={4} xs={12}>
-                  <Blog />
-                </Grid>
-                <Grid item md={4} sm={4} xs={12}>
-                  <Blog />
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
-        </Container>
-      </Box>
+          </Container>
+        </Box>
+      )}
 
       <Footer />
     </>

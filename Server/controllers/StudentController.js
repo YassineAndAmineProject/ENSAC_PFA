@@ -14,7 +14,7 @@ exports.registerStudent = async (req, res, next) => {
       console.log(firstname);
       return next(
         new HttpError(
-          "Des données nécéssaires qui manquent , catch(registerUser !)",
+          "Des données nécéssaires qui manquent , catch(registerStudent)",
           422
         )
       );
@@ -106,7 +106,7 @@ exports.loginStudent = async (req, res, next) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).json({ token, id, fullName, entity: "Etudiant" });
+    res.status(200).json({ token, id, fullName, entity: "Student" });
   } catch (error) {
     console.log(error);
     return next(

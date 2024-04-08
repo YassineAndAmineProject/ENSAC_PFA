@@ -12,7 +12,7 @@ const UserAccountSetting = () => {
   const [show, AccountShow] = useState("A");
   // LOGIQUE BACKEND COMMENCE ICI :
   const navigate = useNavigate();
-  const { currentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useContext(UserContext);
   const token = currentUser?.token;
   useEffect(() => {
     if (!token) {
@@ -23,6 +23,8 @@ const UserAccountSetting = () => {
   const [image, setImage] = useState(null);
   const [url, setUrl] = useState("");
   const [loadingPreview, setLoadingPreview] = useState(true);
+  // l'entity :
+  const entity = currentUser?.entity;
   // les data :
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -34,7 +36,9 @@ const UserAccountSetting = () => {
     const fetchConcernedUser = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/students/get/${currentUser?.id}`
+          `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/get/${
+            currentUser?.id
+          }`
         );
         setFirstName(response.data.firstName);
         setLastName(response.data.lastName);
@@ -69,14 +73,17 @@ const UserAccountSetting = () => {
         newProfilePicture: url,
       };
       const response = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/students/edit`,
+        `${process.env.REACT_APP_BASE_URL}/${entity.toLowerCase()}s/edit`,
         recups,
         { withCredentials: true, headers: { Authorization: `Bearer ${token}` } }
       );
+      const id = currentUser?.id;
+      const fullName = response.data.firstName + " " + response.data.lastName;
+      const isResp = currentUser?.idResp;
+      setCurrentUser({ entity, fullName, id, token, isResp });
+      toast.success("Informations modifiées.");
     } catch (err) {
-      toast.error(
-        "La mise à jour des données a echoué, vérifiez la console : "
-      );
+      toast.error(err.response.data);
       console.log(err);
     }
   };

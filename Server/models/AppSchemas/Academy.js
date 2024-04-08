@@ -30,5 +30,5 @@ const academySchema = new Schema({
     }
 }, { timestamps: true }); 
  
-const model = model("Academy",academySchema); 
-module.exports = model; 
+const AcademyModel = model("Academy",academySchema); 
+module.exports = AcademyModel; 
