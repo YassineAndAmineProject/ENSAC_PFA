@@ -753,12 +753,94 @@ const VerticalNav = memo((props) => {
                   </g>
                 </svg>
 
+<<<<<<< HEAD
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Liste des formations</span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "/dashboard/app/card-list-training"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/card-list-training"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Card liste</span>
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname === "/dashboard/app/list-table-training"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/list-table-training"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">list liste</span>
+            </Link>
+          </li>
+
+          <li className="nav-item">
+            <Link
+              className={`${
+                location.pathname ===
+                "/dashboard/app/training/idOfTrainingFocused"
+                  ? "active"
+                  : ""
+              } nav-link`}
+              to="/dashboard/app/training/idOfTrainingFocused"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <g>
+                  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                </g>
+              </svg>
+
+              <i className="sidenav-mini-icon"> E </i>
+              <span className="item-name">Courses&Chap by Tr</span>
+            </Link>
+          </li>
+        </ul>
+=======
                 <i className="sidenav-mini-icon"> E </i>
                 <span className="item-name">Liste des formations</span>
               </Link>
             </li>
           </ul>
         )}
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30
 
         {/* PARTIES DES COURS */}
         {/* <li className="nav-item static-item">
@@ -818,6 +900,9 @@ const VerticalNav = memo((props) => {
             </Link>
           </li>
         </ul> */}
+
+        {/* PARTIES DES ... */}
+
         <Accordion.Item
           as="li"
           eventKey="utilities-error"

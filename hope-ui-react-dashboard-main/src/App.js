@@ -7,6 +7,7 @@ import "./assets/scss/custom.scss";
 import "./assets/scss/dark.scss";
 import "./assets/scss/rtl.scss";
 import "./assets/scss/customizer.scss";
+//import "./style/style.css";
 
 // Redux Selector / Action
 // Start collaboration with my Awsome Broda

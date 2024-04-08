@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Button, Col, FloatingLabel, Form, Row } from "react-bootstrap";
 import Dropzone from "../../../components/DropZone/Dropzone";
 import { useParams } from "react-router-dom";
+//import Editor from "../../../components/Editor/Editor";
+import EditorDesc from "../../../components/Editor/EditorDesc";
 
-const AddCourseToTraining = () => {
+const AddChapterToCourse = () => {
   //const [eventDescription, setEventDescription] = useState("");
   //console.log('Description :', eventDescription)
 
@@ -71,7 +73,7 @@ const AddCourseToTraining = () => {
           </FloatingLabel>
         </Col> */}
 
-        <Col xs={12} className="gy-6">
+        {/* <Col xs={12} className="gy-6">
           <FloatingLabel controlId="eventDescription" label="Description">
             <Form.Control
               as="textarea"
@@ -79,6 +81,16 @@ const AddCourseToTraining = () => {
               style={{ height: "128px" }}
             />
           </FloatingLabel>
+        </Col> */}
+
+        <Col xs={12} className="gy-6">
+          <div className="mb-3 flex-1">
+            <EditorDesc
+              options={{
+                height: "100%",
+              }}
+            />
+          </div>
         </Col>
 
         <Col xs={12} className="gy-6">
@@ -103,4 +115,4 @@ const AddCourseToTraining = () => {
   );
 };
 
-export default AddCourseToTraining;
+export default AddChapterToCourse;

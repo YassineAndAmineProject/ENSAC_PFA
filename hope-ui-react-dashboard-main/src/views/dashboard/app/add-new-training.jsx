@@ -38,13 +38,18 @@ const AddNewTraining = () => {
   return (
     <Form className="m-9 " style={{ padding: "20px", marginTop: "50px" }}>
       <Row className="justify-content-between align-items-end g-3 mb-5 mt-9">
-        <Col sm={8}> <p className="mb-0 mt-3">CREER UNE NOUVELLE FORMATION</p></Col>
-        { trainingIsCreated && (
-        <Col sm={4}> <Button variant="primary" className="w-100 mb-3">
-          <FontAwesomeIcon icon={faPlus} className="me-2" />
-          
-          Ajouter un cours à cette formation
-        </Button></Col>
+        <Col sm={8}>
+          {" "}
+          <p className="mb-0 mt-3">CREER UNE NOUVELLE FORMATION</p>
+        </Col>
+        {trainingIsCreated && (
+          <Col sm={4}>
+            {" "}
+            <Button variant="primary" className="w-100 mb-3">
+              <FontAwesomeIcon icon={faPlus} className="me-2" />
+              Ajouter un cours à cette formation
+            </Button>
+          </Col>
         )}
         <Col sm={6}>
           <FloatingLabel
@@ -89,7 +94,7 @@ const AddNewTraining = () => {
             <Form.Check.Label htmlFor="online">Online</Form.Check.Label>
       </Form.Check>*/}
         <Col sm={6} md={12} className="gy-1">
-          <code style={{marginRight: '20px'}}>Niveau de difficulté</code>
+          <code style={{ marginRight: "20px" }}>Niveau de difficulté</code>
           <Form.Check type="radio" id="offline" className="form-check-inline">
             <Form.Check.Input type="radio" name="statusRadio" value="option2" />
             <Form.Check.Label htmlFor="offline">Débutant</Form.Check.Label>

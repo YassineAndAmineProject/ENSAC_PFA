@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   Container,
   Drawer,
   IconButton,
@@ -9,23 +8,24 @@ import {
 } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { comCss } from "./ComponentsCss";
-import logo from "../image/logo.svg";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
 import { SearchIcon } from "lucide-react";
-import { Spinner } from "@nextui-org/react";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
 import { UserContext } from "../context/userContext";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Nav } from "react-bootstrap";
 import CustomToggle from "./dropdowns";
 import defaultProfilePic from "../../src/assets/images/avatars/default-profile-picture1.jpg";
 import axios from "axios";
 import "../../src/assets/scss/maker.css";
 import { toast } from "react-toastify";
+<<<<<<< HEAD
+import Avatar from "./Avatar";
+import ItemsDropdownMenu from "./ItemsDropdown";
+=======
 import A_Nav_Bar_Search from "./A_Nav_Bar_Search";
 import B_Search_Results_List from "./B_Search_Results_List";
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30
 const Navbar = () => {
   const classes = comCss();
   const [openMenu, setOpenMenu] = useState(false);
@@ -198,6 +198,15 @@ const Navbar = () => {
               </Button>
             </Box>
           ) : (
+<<<<<<< HEAD
+            <Nav.Item>
+              <Dropdown autoClose="outside" className="h-100">
+                <Dropdown.Toggle
+                  as={Link}
+                  to="#!"
+                  className="dropdown-caret-none nav-link pe-0 py-0 lh-1 h-100 d-flex align-items-center"
+                  variant=""
+=======
             <Dropdown as="li" className="nav-item">
               <Dropdown.Toggle
                 as={CustomToggle}
@@ -257,17 +266,16 @@ const Navbar = () => {
               >
                 <Dropdown.Item
                   href={`/dashboard/app/user-profile/${currentUser?.id}`}
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30
                 >
-                  Profile
-                </Dropdown.Item>
-                <Dropdown.Item href="/dashboard/app/user-profile-edit">
-                  Modifier Profile
-                </Dropdown.Item>
-                <Dropdown.Item href="#">Privacy Setting</Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item href="/logout">Logout</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                  <Avatar src={fetchedUser?.profilePicture} size="l" />
+                </Dropdown.Toggle>
+                <ItemsDropdownMenu
+                  user={fetchedUser}
+                  currentUser={currentUser}
+                />
+              </Dropdown>
+            </Nav.Item>
           )}
         </Box>
       </Container>

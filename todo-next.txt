@@ -2,9 +2,8 @@
 
 1. Ajouter une page de Sign up pour prof  ❎👍
 
-
 2. Ajouter une page pour creation de academies (admin)  ❎👍
-(name
+(name 
 picture
 description
 domain)
@@ -22,13 +21,31 @@ difficulty V
 {fait}
 
 -------------------------ETUDIANTS------------------------
+
 1. Ajouter un gidLayout pour lister les academies (session normale) ❎🤞
 {fait mais reste à bien ajuster }
 2. Ajouter une page pour ajout des adresse social-medias (dashboard ) ❌😒
 {pas urgent}
+
 3. Ajouter une page descriptive de chaque academies (session normale) ❌
 {prochainement}
 
+<<<<<<< HEAD
+------------------ NEW TASKS --------------------------------
+1. Dropdown acceuil pour login
+
+
+
+
+
+
+-------------------- NEXT -------------------------------
+1. Ajout d'une page pour visualiser les demandes d'inscription aux formations de telle sorte que cette page est obtenu une fois cliquant sur une  notification. 
+qui affiche une ligne indiquant le nom et la demande de l'étudiant et deux boutons 
+approuver et rejeter.
+
+2. Ajout d'une page pour le quiz pour chaque cours (n chapitres). (10 questions qcm radio - dropdown )
+=======
 ----Besoins UI : ------------------------------------------
 ------> PROFESSEUR (Non responsable):
 👆 Création d'une formation : 
@@ -46,3 +63,4 @@ meme chose pour l'académie , par ce que un meme prof peut travailler chez plusi
 *** [Optionnel] : Textarea de commentaires ainsi de suite 
 
 
+>>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30

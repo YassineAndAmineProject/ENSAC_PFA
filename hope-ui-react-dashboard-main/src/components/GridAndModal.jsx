@@ -6,10 +6,13 @@ import BoardViewModal from "./BoardViewModal";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 import { Badge, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import CreateCourseModal from "./ModalAction/createModal";
 
 const GridAndModalItem = ({ project }) => {
   const [openDetailsModal, setOpenDetailsModal] = useState(false);
   const shouldDisplay = window.location.pathname.includes("dashboard");
+  const [openInviteModal, setOpenInviteModal] = useState(false);
+
   return (
     <>
       <RevealDropdownTrigger
@@ -40,18 +43,17 @@ const GridAndModalItem = ({ project }) => {
                     <Dropdown.Item eventKey="1">
                       <Link
                         style={{ textDecoration: "none", color: "inherit" }}
-                        to={"#"}
+                        to={"/dashboard/app/training/idOfTrainingFocused"}
                       >
-                        Visualiser
+                        Voir les cours
                       </Link>
                     </Dropdown.Item>
-                    <Dropdown.Item eventKey="2">
-                      <Link
-                        style={{ textDecoration: "none", color: "inherit" }}
-                        to={`/dashboard/app/add-new-course-to/trainingId`}
-                      >
-                        Ajouter un cours
-                      </Link>
+                    <Dropdown.Item
+                      eventKey="2"
+                      onClick={() => setOpenInviteModal(!openInviteModal)}
+                    >
+
+                      Ajouter un cours
                     </Dropdown.Item>
                     <Dropdown.Divider />
                     <Dropdown.Item eventKey="4" className="text-danger">
@@ -66,11 +68,14 @@ const GridAndModalItem = ({ project }) => {
         </div>
       </RevealDropdownTrigger>
 
-      {/* <BoardViewModal
-        show={openDetailsModal}
-        handleClose={() => setOpenDetailsModal(false)}
-        project={project}
-      /> */}
+
+
+      <CreateCourseModal
+        show={openInviteModal}
+        handleClose={() => setOpenInviteModal(false)}
+        type={"create"}
+        trainingID={project.id}
+      />
     </>
   );
 };
