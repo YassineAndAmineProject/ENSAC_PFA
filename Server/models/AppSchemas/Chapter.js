@@ -21,8 +21,4 @@ const chapterSchema = new Schema(
   { timestamps: true }
 );
 const chapterModel = model("Chapter", chapterSchema);
-<<<<<<< HEAD
 module.exports = chapterModel;
-=======
-module.exports = chapterModel;
->>>>>>> 8f6f5bfe70aa175b33c8d7b3dcc6dc8fcfcfcb30

@@ -58,6 +58,7 @@ import ListView from "../components/listViews/ListView";
 import ListCoursesByTraining from "../components/CoursesByTraining/ListCoursesByTraining";
 import AddChapterToCourse from "../views/dashboard/app/add-chapter";
 import Notifications from "../components/notifications/Notifications";
+import Members from "../components/members/Members";
 // petite remarque : ouvre le composant Default, tu trouveras un Outlet dans lequel les "children" varient ainsi que tu trouveras l'élément Header qui est fixe...
 export const DefaultRouter = [
   {
@@ -143,6 +144,10 @@ export const DefaultRouter = [
       {
         path: "/dashboard/app/add-new-chapter-to/:id",
         element: <AddChapterToCourse />,
+      },
+      {
+        path: "/dashboard/app/academy-members",
+        element: <Members />,
       },
       {
         path: "/dashboard/notifications",

@@ -1,10 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-//import PhoenixOffcanvas from 'components/base/PhoenixOffcanvas';
 
 import React from "react";
 import classNames from "classnames";
-// import FileListItem from './FileListItem';
 
 import { faPen, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import ModalLeft from "./ModalLeft";

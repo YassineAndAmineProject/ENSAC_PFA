@@ -30,6 +30,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProvider from "./context/userContext";
 import AcademiesBoardView from "./components/AcademiesView";
+import FaqPage from "./components/faq/FaqTab";
 const router = createBrowserRouter(
   [
     {
@@ -111,6 +112,10 @@ const router = createBrowserRouter(
           <Faq />
         </UserProvider>
       ),
+    },
+    {
+      path: "/faqPage",
+      element: <FaqPage />,
     },
     {
       path: "/admissionform",

@@ -24,16 +24,16 @@ const Hero = () => {
               Instructeurs sélectionnés avec soin et cours élaborés par des
               experts, conçus pour les étudiants et entrepreneurs modernes.
             </Typography>
-            {!token && (
-              <Box className={classes.hero_button}>
-                <Button
-                  sx={{ marginRight: "12px" }}
-                  ccomponent={NavLink}
-                  href="/courses"
-                  className={`${classes.button} ${classes.button_3}`}
-                >
-                  Parcourir les cours
-                </Button>
+            <Box className={classes.hero_button}>
+              <Button
+                sx={{ marginRight: "12px" }}
+                ccomponent={NavLink}
+                href="/Academies"
+                className={`${classes.button} ${classes.button_3}`}
+              >
+                Parcourir les academies
+              </Button>
+              {!token && (
                 <Button
                   ccomponent={NavLink}
                   to="/"
@@ -41,8 +41,8 @@ const Hero = () => {
                 >
                   Êtes-vous un instructeur ?
                 </Button>
-              </Box>
-            )}
+              )}
+            </Box>
           </Box>
           <Box className={classes.hero_banner_right}>
             <img

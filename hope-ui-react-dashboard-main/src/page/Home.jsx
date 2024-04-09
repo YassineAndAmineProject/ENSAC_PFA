@@ -15,7 +15,6 @@ import NavBar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { UserContext } from "../context/userContext";
 import axios from "axios";
-import { toast } from "react-toastify";
 const data = [1, 2, 3, 4, 5, 6, 7];
 const Home = () => {
   const classes = pageCss();
@@ -65,41 +64,32 @@ const Home = () => {
       <Box className={classes.home_course_section}>
         <Container maxWidth="lg">
           <Box className={classes.home_course}>
-            <Typography
-              variant="h3"
-              component="h3"
-              sx={{ textAlign: "center" }}
-              className={`${classes.slider_title} ${classes.home_carosol_title_padding}`}
-            >
-              Nos recommandations
-            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Typography
+                variant="h3"
+                component="h3"
+                sx={{ textAlign: "center" }}
+                className={`${classes.slider_title} ${classes.home_carosol_title_padding}`}
+              >
+                Nos recommandations
+              </Typography>
+            </Box>
             <Box className={classes.home_course_slider}>
-              <Grid container>
-                {/* <Grid item md={4} sm={4} xs={12}>
-                  <Slidercourse />
-                </Grid>
-                <Grid item md={4} sm={4} xs={12}>
-                  <Slidercourse />
-                </Grid>
-                <Grid item md={4} sm={4} xs={12}>
-                  <Slidercourse />
-                </Grid> */}
+              <Slider {...settings}>
                 {fetchedTrainings &&
                   fetchedAcademies &&
                   fetchedTrainings.map((training, index) => (
-                    <Grid item md={4} sm={4} xs={12} key={index}>
-                      <Slidercourse
-                        key={index}
-                        trainingId={training._id}
-                        title={training.name}
-                        difficulty={training.difficulty}
-                        picture={training.picture}
-                        academy={fetchedAcademies[index].name}
-                        academyPicture={fetchedAcademies[index].picture}
-                      />
-                    </Grid>
+                    <Slidercourse
+                      key={index}
+                      trainingId={training._id}
+                      title={training.name}
+                      difficulty={training.difficulty}
+                      picture={training.picture}
+                      academy={fetchedAcademies[index].name}
+                      academyPicture={fetchedAcademies[index].picture}
+                    />
                   ))}
-              </Grid>
+              </Slider>
             </Box>
           </Box>
           <Box className={classes.home_course}>
