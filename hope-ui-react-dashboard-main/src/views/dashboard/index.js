@@ -275,6 +275,7 @@ const Index = memo((props) => {
       navigate("/auth/sign-in");
     }
   }, []);
+  
   return (
     <Fragment>
       <Row>

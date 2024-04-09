@@ -9,26 +9,36 @@ import EventNoteRoundedIcon from "@mui/icons-material/EventNoteRounded";
 import VideocamRoundedIcon from "@mui/icons-material/VideocamRounded";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import courseimg from "../../image/course-react.jpg";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
 import { Iframe } from "../CommonComponents";
 import ModalBtn from "../popup";
 import { toast } from "react-toastify";
 import { Heart, MoveRight, MoveRightIcon } from "lucide-react";
 import { UserContext } from "../../context/userContext";
 import "./spec.css";
+import socket from "../../Socket/socket";
+import axios from "axios";
 const CourseSidebar = () => {
   const classes = comCss();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const resolveAfter3Sec = new Promise((resolve) => setTimeout(resolve, 3000));
-
-  const handleEnroll = () => {
+  const { id } = useParams();
+  const handleEnroll = async () => {
     toast.promise(resolveAfter3Sec, {
       pending: "Envoi en cours",
       success: `Demande envoyé`,
       error: "Une erreur est survenue🤯",
     });
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/trainings/getRoom/${id}`
+    );
+    const room = response.data;
+    console.log("THIS IS THE STUDENT ROOM : ");
+    console.log(room);
+    socket.emit("join_room", room);
+    socket.emit("send_message", { message: "AFEN AS7AYBI", room });
   };
   const handleFavorite = () => {
     toast.promise(resolveAfter3Sec, {
@@ -87,7 +97,7 @@ const CourseSidebar = () => {
           >
             Enroll Course
   </Button>*/}
-          {token ? (
+          {currentUser?.entity == "Student" ? (
             <ModalBtn
               sx={{ marginBottom: "10px !important" }}
               className={`${classes.button} ${classes.course_sidebar_button_1}`}
@@ -109,7 +119,7 @@ const CourseSidebar = () => {
               Connectez vous pour bénéficier
             </Link>
           )}
-          {token && (
+          {currentUser?.entity == "Student" && (
             <Button
               component={NavLink}
               onClick={handleFavorite}

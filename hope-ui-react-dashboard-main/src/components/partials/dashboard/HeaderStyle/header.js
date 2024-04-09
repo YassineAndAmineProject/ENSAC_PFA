@@ -34,8 +34,9 @@ import * as SettingSelector from "../../../../store/setting/selectors";
 import { UserContext } from "../../../../context/userContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import socket from "../../../../Socket/socket";
 const Header = memo((props) => {
-  const navbarHide = useSelector(SettingSelector.navbar_show); // array
+  const navbarHide = useSelector(SettingSelector.navbar_show);
   const headerNavbar = useSelector(SettingSelector.header_navbar);
   useEffect(() => {
     // navbarstylemode
@@ -56,6 +57,7 @@ const Header = memo((props) => {
   };
   // LOGIQUE BACKEND COMMENCE ICI :
   const { currentUser } = useContext(UserContext);
+  const [notification, setNotification] = useState("");
   const token = currentUser?.token;
   const entity = currentUser?.entity;
   const [fetchedUser, setFetchedUser] = useState(null);
@@ -79,6 +81,12 @@ const Header = memo((props) => {
     if (token) {
       fetchConcernedUser();
     }
+  }, []);
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      toast.success(data.message);
+      setNotification(data.message);
+    });
   }, []);
   return (
     <Fragment>

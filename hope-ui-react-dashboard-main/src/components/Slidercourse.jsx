@@ -1,5 +1,5 @@
 import { Avatar, Box, IconButton, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { comCss } from "./ComponentsCss";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
@@ -20,7 +20,17 @@ const Slidercourse = ({
 }) => {
   const classes = comCss();
   // LOGIQUE BACK END :
-
+  // const createLink = () => {
+  //   let comp;
+  //   academyResps.forEach((id) => {
+  //     comp += id;
+  //   });
+  //   return comp;
+  // };
+  // useEffect(() => {
+  //   console.log("THE LINK COMPLETION IS : ");
+  //   console.log(createLink());
+  // }, []);
   return (
     <Box className={classes.Slidercourse}>
       <Link>
@@ -28,7 +38,7 @@ const Slidercourse = ({
           src={picture}
           alt={`${trainingId}`}
           className={classes.img_responsive}
-          style={{height:"12rem"}}
+          style={{ height: "12rem" }}
         />
       </Link>
       <Typography variant="h4" component="h4" className={classes.slider_title}>

@@ -28,7 +28,7 @@ const SignIn = () => {
         form
       );
       const user = await result.data;
-      console.log(user);
+      console.log(user);  
       setCurrentUser(user);
       navigate("/dashboard");
     } catch (err) {

@@ -1,11 +1,19 @@
 const { model, Schema } = require("mongoose");
 const notificationSchema = new Schema(
   {
-    notified: {
+    toNotified: {
       type: String,
       required: true,
     },
-    notifier: {
+    fromNotifier: {
+      type: String,
+      required: true,
+    },
+    title: {
+      type: String,
+      required: true,
+    },
+    picture: {
       type: String,
       required: true,
     },
@@ -13,8 +21,12 @@ const notificationSchema = new Schema(
       type: String,
       required: true,
     },
+    read: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
-const model = model("Notification", notificationSchema);
-module.exports = model;
+const notificationModel = model("Notification", notificationSchema);
+module.exports = notificationModel;

@@ -164,7 +164,6 @@ exports.undefineResponsable = async (req, res, next) => {
     const concernedProf = await Professor.findById(profId);
     const academyId = concernedProf.responsableFor;
     const concernedAcademy = await Academy.findById(academyId);
-
     const newProf = await Professor.findByIdAndUpdate(
       profId,
       { responsableFor: "" },

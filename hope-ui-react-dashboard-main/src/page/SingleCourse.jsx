@@ -165,7 +165,6 @@ const SingleCourse = () => {
           </Grid>
         </Grid>
       </Container>
-
       <Footer />
     </>
   );
